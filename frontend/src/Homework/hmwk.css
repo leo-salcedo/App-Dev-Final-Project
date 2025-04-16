@@ -1,0 +1,40 @@
+.tree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 50px solid gray;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .triangle:hover {
+    transform: scale(1.1);
+  }
+  
+  .not-started {
+    border-bottom-color: lightgray;
+  }
+  
+  .in-progress {
+    border-bottom-color: #b19cd9;
+  }
+  
+  .completed {
+    border-bottom-color: #2c3e50;
+  }
+  
