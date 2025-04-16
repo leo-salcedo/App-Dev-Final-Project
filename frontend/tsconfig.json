@@ -3,5 +3,18 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "exclude": ["dist", "node_modules"]
 }
+
