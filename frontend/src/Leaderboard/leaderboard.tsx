@@ -1,4 +1,10 @@
 import { useState } from 'react'
 import './leaderboard.css'
 
-export default function Leaderboard() {}
+const Leaderboard = ()=> {
+    return (
+
+    );
+}
+
+export default Leaderboard;

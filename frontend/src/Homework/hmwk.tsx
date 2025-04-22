@@ -1,25 +1,50 @@
-import { useState } from 'react';
+import React from 'react'
 import './hmwk.css';
 
-const Tree = () => {
-  const whenClick = (label: string) => {
-    alert(`You clicked on: ${label}`); // fixed template string and typo
-  };
-
-  return (
-    <div className="tree-container">
-      <div className="row">
-        <div className="triangle not-started" onClick={() => whenClick('Not Started')}></div>
-      </div>
-      <div className="row">
-        <div className="triangle in-progress" onClick={() => whenClick('In Progress')}></div>
-      </div>
-      <div className="row">
-        <div className="triangle completed" onClick={() => whenClick('Completed')}></div>
-      </div>
-    </div>
-  );
+type TreeNode = {
+  label: string;
+  color: string;
+  children?: TreeNode[];
 };
 
+const treeData: TreeNode = {
+  label: 'Start',
+  color: 'not-started',
+  children: [
+      {
+          label: 'Homework 1A',
+          color: 'completed',
+          children: [
+              { label: 'Homework 1B', color: 'not-started' },
+              { label: 'Homework 1C', color: 'not-started' },
+          ],
+      },
+      {
+          label: 'Homework 2A',
+          color: 'completed',
+          children: [
+              { label: 'Homework 2B', color: 'not-started' },
+              { label: 'Homework 2C', color: 'not-started' },
+          ],
+      }
+  ],   
+};
+
+function Tree(){
+  const makeTree = (node: any) => {
+    return (
+      <div className = "tree-node">
+        <div className = {'triangle ${node.color}'} onClick={() => alert(node.label)}></div>
+        {node.children && (
+          <div className = "tree-children">
+            {node.children.map((child: any, i: number) => makeTree(child))}
+          </div>
+        )}
+      </div>
+    );
+  };
+  return <div className = "tree-container">{makeTree(treeData)}</div>;
+}
 export default Tree;
+
 
