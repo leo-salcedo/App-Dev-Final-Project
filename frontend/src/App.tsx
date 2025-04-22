@@ -9,6 +9,7 @@ const Landing = ()=> (
   <div className="App">
       <h1>Homework Tree</h1>
       <Tree />
+      <Link to ="/"> Back to Sign In</Link>
     </div>
 )
 
@@ -16,11 +17,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path = "" element={<SignIn />} />
+        <Route path = "/" element={<SignIn />} />
         <Route path = "/Landing" element={<Landing />} />
       </Routes>
     </Router>
   );
 }
 
-export default App
+export default App;
