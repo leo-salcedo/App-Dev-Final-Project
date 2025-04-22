@@ -1,4 +1,10 @@
 import { useState } from 'react'
 import './profile.css'
 
-export default function Profile() {}
+const Profile = ()=> {
+    return (
+
+    );
+}
+
+export default Profile;
