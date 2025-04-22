@@ -17,6 +17,7 @@ function App() {
     <Router>
       <Routes>
         <Route path = "" element={<SignIn />} />
+        <Route path = "/Landing" element={<Landing />} />
       </Routes>
     </Router>
   );
