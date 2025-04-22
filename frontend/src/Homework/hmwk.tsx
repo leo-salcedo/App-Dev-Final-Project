@@ -45,6 +45,7 @@ function Tree(){
   };
   return <div className = "tree-container">{makeTree(treeData)}</div>;
 }
+
 export default Tree;
 
 

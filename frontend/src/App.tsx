@@ -8,7 +8,6 @@ import Tree from './Homework/hmwk.tsx';
 const Landing = ()=> (
   <div className="App">
       <h1>Homework Tree</h1>
-      <Tree />
     </div>
 )
 
@@ -16,8 +15,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path = "" element={<SignIn />} />
-        <Route path = "/Landing" element={<Landing />} />
+        <Route path = "/" element={<SignIn />} />
+        <Route path = "/Landing" element={<Tree />} />
       </Routes>
     </Router>
   );
