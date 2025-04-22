@@ -16,7 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path = "/" element={<SignIn />} />
-        <Route path = "/Landing" element={<Landing />} />
+        <Route path = "/Landing" element={<Tree />} />
       </Routes>
     </Router>
   );
