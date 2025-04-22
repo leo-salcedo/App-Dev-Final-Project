@@ -38,6 +38,6 @@ async def auth_callback(request: Request):
     # (You can still keep the token exchange + user fetching here)
 
     # Redirect to frontend (React)
-    return RedirectResponse("https://redesigned-bassoon-j77q7ww9v5j2j76x-5173.app.github.dev/#/Landing")
+    return RedirectResponse("https://redesigned-bassoon-j77q7ww9v5j2j76x-5173.app.github.dev/#/tree")
 
 
