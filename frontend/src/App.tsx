@@ -1,14 +1,23 @@
 import { useState } from 'react'
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import './App.css'
 import Tree from './Homework/hmwk.tsx'; 
 
-function App() {
-  return (
-    <div className="App">
+const Landing = ()=> (
+  <div className="App">
       <h1>Homework Tree</h1>
       <Tree />
     </div>
+)
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path = "" element={<Landing />} />
+      </Routes>
+    </Router>
   );
 }
 
