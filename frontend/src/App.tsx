@@ -10,7 +10,6 @@ import Questions from "./Questions/questions.tsx"
 const Landing = ()=> (
   <div className="App">
       <h1>Homework Tree</h1>
-      <Tree />
     </div>
 )
 
@@ -18,12 +17,17 @@ function App() {
   return (
     <Router>
       <Routes>
+<<<<<<< HEAD
         <Route path = "" element={<SignIn />} />
         <Route path = "/Landing" element={<Landing />} />
         <Route path = "/Homework" element = {<Tree/>}/>
         <Route path = "/Leaderboard" element = {<Leaderboard/>}></Route>
         <Route path = "/Questions" element = {<Questions/>} ></Route>
 
+=======
+        <Route path = "/" element={<SignIn />} />
+        <Route path = "/tree" element={<Tree />} />
+>>>>>>> cec24bb828d0433d597acf01b7ab93f9879d3ffa
       </Routes>
     </Router>
   );

@@ -24,9 +24,15 @@ const treeData: TreeNode = {
           color: 'completed',
           children: [
               { label: 'Homework 2B', color: 'not-started' },
-              { label: 'Homework 2C', color: 'not-started' },
           ],
-      }
+      },
+      {
+        label: 'Homework 3A',
+        color: 'completed',
+        children: [
+            { label: 'Homework 3B', color: 'not-started' },
+        ],
+    }
   ],   
 };
 // you should make the nodes change dynamically and scale with the screen
@@ -45,6 +51,7 @@ function Tree(){
   };
   return <div className = "tree-container">{makeTree(treeData)}</div>;
 }
+
 export default Tree;
 
 
