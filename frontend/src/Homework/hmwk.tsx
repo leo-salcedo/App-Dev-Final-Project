@@ -29,7 +29,7 @@ const treeData: TreeNode = {
       }
   ],   
 };
-
+// you should make the nodes change dynamically and scale with the screen
 function Tree(){
   const makeTree = (node: any) => {
     return (
