@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import Sidebar from '../Sidebar/Sidebar.tsx';
 import './profile.css'
-import './Profile';
+import './profile';
 
 const Profile = () => {
     const navigate = useNavigate();

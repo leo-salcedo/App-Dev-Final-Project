@@ -1,0 +1,147 @@
+.account-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: #F9F6F1;
+}
+
+.merged-container {
+    display: flex;
+    justify-content: space-between;
+    width: justify;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: #F9F6F1;
+    flex-direction: column;
+}
+    
+.header-container {
+    width: justify;
+    background-color: #713237;
+    padding: 20px;
+    text-align: left;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border: black solid 0.2rem;
+}
+    
+.section1, .section2 {
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    padding: 20px;
+}
+
+.header1 {
+    position: sticky;
+    top: 0;
+    background-color: #713237;
+    padding: 20px;
+    margin-top: 200px;
+    text-align: left;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+h1, h3 {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.display-container {
+    background-color: white;
+    width: justify;
+    height: auto;
+    padding: 0px;
+    padding-right: 0;
+    padding-left: 15px;
+    text-align: left;
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-right: 0;
+    border: black solid 0.05rem;
+}
+
+h3 {
+    color: #6c6364;
+    font-size: 2rem;
+}
+
+#location, #produce, #season, #negotiation, #travel, #notifications, #language, #privacy {
+    color: black;
+    margin-top: 0;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+#labelName {
+    color: #F9F6F1;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+Select {
+    color: black;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+option {
+    padding: 20px;
+}
+
+.logOutButton {
+    background-color: #713237;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    width: 15%;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+ 
+  .logOutButton:hover {
+    background-color: #8B4513;
+    transform: translateY(-2px);
+  }
+ 
+  .logOutButton:active {
+    transform: translateY(0);
+  }
+
+.dotted-line {
+    border-top: 2px dotted #000;
+    margin: 20px 0;
+}
+
+
+    
