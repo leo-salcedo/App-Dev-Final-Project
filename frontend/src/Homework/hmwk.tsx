@@ -1,6 +1,7 @@
 import React from 'react'
 import './hmwk.css';
 
+
 type TreeNode = {
   label: string;
   color: string;
@@ -32,18 +33,49 @@ const treeData: TreeNode = {
         children: [
             { label: 'Homework 3B', color: 'not-started' },
         ],
-    }
+    }, 
+    {
+      label: 'Homework 4A',
+      color: 'completed',
+      children: [
+          { label: 'Homework 4B', color: 'not-started' },
+      ],
+    },
+    {
+      label: 'Homework 5A',
+      color: 'completed',
+    },
+    {
+      label: 'Homework 6A',
+      color: 'completed',
+    },
+    {
+      label: 'Homework 7A',
+      color: 'completed',
+      children: [
+        { label: 'Homework 7B', color: 'not-started' },
+        { label: 'Homework 7C', color: 'not-started' },
+      ],
+  },
   ],   
 };
 // you should make the nodes change dynamically and scale with the screen
 function Tree(){
-  const makeTree = (node: any) => {
+  const makeTree = (node: TreeNode) => {
     return (
       <div className = "tree-node">
-        <div className = {'triangle ${node.color}'} onClick={() => alert(node.label)}></div>
+        <div className="node-content">
+        <div className={`triangle ${node.color}`} onClick={() => alert(node.label)}></div>
+        </div>
+        
         {node.children && (
           <div className = "tree-children">
-            {node.children.map((child: any, i: number) => makeTree(child))}
+            {node.children.map((child, i) => (
+              <div key = {i} className =  "tree-branch">
+                <div className = "connector-line" />
+                {makeTree(child)}
+              </div>
+            ))}
           </div>
         )}
       </div>
