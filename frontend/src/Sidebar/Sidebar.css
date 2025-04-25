@@ -67,6 +67,10 @@
     font-size: 18px;
 }
 
+.sidebar-logo {
+    color: #ffffff;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 60px;

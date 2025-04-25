@@ -1,6 +1,6 @@
 import React from 'react'
+import Sidebar from '../Sidebar/Sidebar.tsx';
 import './hmwk.css';
-
 
 type TreeNode = {
   label: string;
@@ -59,6 +59,7 @@ const treeData: TreeNode = {
   },
   ],   
 };
+
 // you should make the nodes change dynamically and scale with the screen
 function Tree(){
   const makeTree = (node: TreeNode) => {
@@ -81,7 +82,14 @@ function Tree(){
       </div>
     );
   };
-  return <div className = "tree-container">{makeTree(treeData)}</div>;
+  return (
+    <div className = "page-container">
+      <Sidebar />
+      <div className = "tree-container">
+        {makeTree(treeData)}
+      </div>
+    </div>
+  );
 }
 
 export default Tree;
