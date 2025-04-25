@@ -1,6 +1,6 @@
 .venv\
-.env
-*.env
-.env.local
-.env.development
-.env.production
+/frontend/.env
+/frontend/.env.*
+
+/backend/.env
+/backend/.env.*
