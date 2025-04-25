@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import "./SignIn.css"
 
+const backendUrl = process.env.REACT_APP_BACKEND;
+
 const handleLogin = () => {
-    window.location.href = 'https://redesigned-bassoon-j77q7ww9v5j2j76x-8000.app.github.dev/login';
+    window.location.href = `${backendUrl}/login`;
 };
 
 const SignIn = ()=> {

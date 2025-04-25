@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css'
 import SignIn from "./SignIn/SignIn.tsx"
 import Tree from './Homework/hmwk.tsx'; 
+const backendUrl = process.env.REACT_APP_BACKEND;
 
 const Landing = ()=> (
   <div className="App">

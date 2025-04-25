@@ -11,11 +11,12 @@ load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 REDIRECT_URI = os.getenv("REDIRECT_URI")
+FRONTEND_LINK = os.getenv("PERSONAL_LINK_FRONT")
 
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or your React port
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -38,6 +39,6 @@ async def auth_callback(request: Request):
     # (You can still keep the token exchange + user fetching here)
 
     # Redirect to frontend (React)
-    return RedirectResponse("https://redesigned-bassoon-j77q7ww9v5j2j76x-5173.app.github.dev/#/tree")
+    return RedirectResponse(FRONTEND_LINK + "/#/tree")
 
 
