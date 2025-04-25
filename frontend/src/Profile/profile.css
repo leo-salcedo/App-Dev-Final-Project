@@ -19,13 +19,13 @@
     
 .header-container {
     width: justify;
-    background-color: #713237;
+    background-color: #C2AFF0;
     padding: 20px;
     text-align: left;
     font-size: 48px;
     font-weight: bold;
     margin-bottom: 20px;
-    border: black solid 0.2rem;
+    border: black solid 0.1rem;
 }
     
 .section1, .section2 {
@@ -38,7 +38,7 @@
 .header1 {
     position: sticky;
     top: 0;
-    background-color: #713237;
+    background-color: #C2AFF0;
     padding: 20px;
     margin-top: 200px;
     text-align: left;
@@ -64,7 +64,7 @@ h1, h3 {
     padding-left: 15px;
     text-align: left;
     font-size: 38px;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 20px;
     margin-right: 0;
     border: black solid 0.05rem;
@@ -75,7 +75,7 @@ h3 {
     font-size: 2rem;
 }
 
-#location, #produce, #season, #negotiation, #travel, #notifications, #language, #privacy {
+#year, #proficient {
     color: black;
     margin-top: 0;
     text-align: left;
@@ -86,7 +86,7 @@ h3 {
 }
 
 #labelName {
-    color: #F9F6F1;
+    color: #727171;
     text-align: left;
 }
 
@@ -115,7 +115,7 @@ option {
 }
 
 .logOutButton {
-    background-color: #713237;
+    background-color: #C2AFF0;
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -130,7 +130,7 @@ option {
   }
  
   .logOutButton:hover {
-    background-color: #8B4513;
+    background-color: #C2AFF0;
     transform: translateY(-2px);
   }
  
