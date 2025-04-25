@@ -3,7 +3,7 @@ import "./SignIn.css"
 import { Link } from 'react-router-dom';
 
 
-const backendUrl = process.env.REACT_APP_BACKEND;
+const backendUrl = import.meta.env.VITE_BACKEND;
 
 const handleLogin = () => {
     window.location.href = `${backendUrl}/login`;
