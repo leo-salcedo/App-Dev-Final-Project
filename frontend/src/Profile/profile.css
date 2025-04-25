@@ -1,4 +1,5 @@
 .account-page {
+    margin-left: 25%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -19,7 +20,7 @@
     
 .header-container {
     width: justify;
-    background-color: #C2AFF0;
+    background-color: #457EAC;
     padding: 20px;
     text-align: left;
     font-size: 48px;
@@ -38,7 +39,7 @@
 .header1 {
     position: sticky;
     top: 0;
-    background-color: #C2AFF0;
+    background-color: #457EAC;
     padding: 20px;
     margin-top: 200px;
     text-align: left;
@@ -115,7 +116,7 @@ option {
 }
 
 .logOutButton {
-    background-color: #C2AFF0;
+    background-color: #457EAC;
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -130,7 +131,7 @@ option {
   }
  
   .logOutButton:hover {
-    background-color: #C2AFF0;
+    background-color: #457EAC;
     transform: translateY(-2px);
   }
  
