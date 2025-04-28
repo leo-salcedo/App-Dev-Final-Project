@@ -1,9 +1,11 @@
 .tree-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: bisque;
   padding: 20px;
+  overflow: auto;
 }
 
 .tree-node {
@@ -16,7 +18,8 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  gap: 40px;
+  gap: 60px;
+  flex-wrap: wrap;
 }
 
 .tree-branch {
@@ -26,22 +29,20 @@
 }
 
 .rectangle {
-  width: 200px;
-  height: 50px;
+  width: 300px;
+  height: 90px;
   background-color: gray;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-  font-size: 16px;
   color: white;
   position: relative;
 }
 
 .rectangle-text{
   font-weight: bold;
-  font-size: 16px;
-  color: while;
+  font-size: 25px;
+  color: white;
   white-space: nowrap;
   justify-content: center;
 }
@@ -49,9 +50,9 @@
 .triangle {
   width: 0;
   height: 0;
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  border-bottom: 50px solid gray;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 70px solid gray;
   position: relative;
   cursor: pointer;
   transition: border-bottom-color 0.1s;
@@ -63,15 +64,15 @@
 
 .triangle-text {
   position: absolute;
-  top: 55%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   color: white;
-  margin-top: 30px;
+  margin-top: 40px;
   white-space: nowrap; 
 }
-
+ 
 
   
