@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import './App.css'
@@ -21,9 +20,14 @@ function App() {
       <Routes>
         <Route path = "/" element={<SignIn />} />
         <Route path = "/Landing" element={<Landing />} />
-        <Route path = "/Profile" element = {<Profile />}/>
-        <Route path = "/Homework" element = {<Tree />}/>
-        <Route path = "/Leaderboard" element = {<Leaderboard />}></Route>
+        <Route path = "/Profile" element = {<Profile/>}/>
+        <Route path = "/Homework" element = {<Tree/>}/>
+        <Route path = "/Leaderboard" element = {<Leaderboard/>}></Route>
+        {/* <Route path = "/Questions" element = {<Questions/>} ></Route> */}
+
+        <Route path = "/SignIn" element={<SignIn />} />
+
+        {/* <Route path = "/tree" element={<Tree />} /> */}
         <Route path="/Homework/:id" element={<Questions />} />
         
       </Routes>
