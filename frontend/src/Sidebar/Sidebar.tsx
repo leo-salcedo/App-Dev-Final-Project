@@ -26,9 +26,9 @@ const Sidebar = () => {
          <span>Homework</span>
        </Link>
       
-       <Link to="/leaderboard" className={`menu-item ${location.pathname === '/leaderboard' ? 'active' : ''}`}>
+       <Link to="/gradebook" className={`menu-item ${location.pathname === '/gradebook' ? 'active' : ''}`}>
          <i className="fas fa-comments"></i>
-         <span>Leaderboard</span>
+         <span>Gradebook</span>
        </Link>
       
        <Link to="/profile" className={`menu-item ${location.pathname === '/profile' ? 'active' : ''}`}>

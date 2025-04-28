@@ -5,7 +5,7 @@ import SignIn from "./SignIn/SignIn.tsx"
 import Profile from './Profile/profile.tsx'
 import Tree from './Homework/hmwk.tsx'; 
 const backendUrl = import.meta.env.VITE_BACKEND;
-import Leaderboard from "./Leaderboard/leaderboard.tsx"
+import Gradebook from "./Gradebook/gradebook.tsx"
 import Questions from "./Questions/questions.tsx"
 
 const Landing = ()=> (
@@ -22,7 +22,7 @@ function App() {
         <Route path = "/Landing" element={<Landing />} />
         <Route path = "/Profile" element = {<Profile/>}/>
         <Route path = "/Homework" element = {<Tree/>}/>
-        <Route path = "/Leaderboard" element = {<Leaderboard/>}></Route>
+        <Route path = "/Gradebook" element = {<Gradebook/>}></Route>
         {/* <Route path = "/Questions" element = {<Questions/>} ></Route> */}
 
         <Route path = "/SignIn" element={<SignIn />} />

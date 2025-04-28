@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Sidebar from '../Sidebar/Sidebar.tsx';
 import {useNavigate} from 'react-router-dom';
 import './hmwk.css';

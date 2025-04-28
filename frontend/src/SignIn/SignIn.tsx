@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import "./SignIn.css"
 import { Link } from 'react-router-dom';
 
@@ -17,7 +16,7 @@ const SignIn = ()=> {
         <ul>
           <li><Link to ="/Homework">Homework</Link></li>
           <li><Link to ="/Profile">Profile</Link></li>
-          <li><Link to ="/Leaderboard" >Leaderboard</Link></li>
+          <li><Link to ="/Gradebook">Gradebook</Link></li>
         </ul>
        
         </div>
