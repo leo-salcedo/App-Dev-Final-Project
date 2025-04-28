@@ -96,7 +96,15 @@ function Tree(){
       </div>
    );
   };
-  return <div className = "tree-container"> {makeTree(treeData)}</div>;
+
+  return (
+    <div className = "page-container"> 
+      <Sidebar />
+      <div className = "tree-container">
+        {makeTree(treeData)}
+      </div>
+    </div>
+  );
 }
 export default Tree;
 

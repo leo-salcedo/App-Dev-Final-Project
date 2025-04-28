@@ -1,85 +1,45 @@
 .account-page {
-    margin-left: 25%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
     color: #F9F6F1;
 }
-
+  
 .merged-container {
     display: flex;
-    justify-content: space-between;
-    width: justify;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #000000;
     border-radius: 8px;
     background-color: #F9F6F1;
-    flex-direction: column;
 }
-    
+
 .header-container {
-    width: justify;
+    width: 100%;
     background-color: #457EAC;
     padding: 20px;
-    text-align: left;
+    text-align: center;
     font-size: 48px;
     font-weight: bold;
     margin-bottom: 20px;
     border: black solid 0.1rem;
 }
-    
+
 .section1, .section2 {
     display: flex;
     flex-direction: column;
-    width: 1200px;
+    
+    width: 100%;
     padding: 20px;
-}
-
-.header1 {
-    position: sticky;
-    top: 0;
-    background-color: #457EAC;
-    padding: 20px;
-    margin-top: 200px;
-    text-align: left;
-    font-size: 48px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    margin-top: 40px;
-}
-
-h1, h3 {
-    font-size: 48px;
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.display-container {
-    background-color: white;
-    width: justify;
-    height: auto;
-    padding: 0px;
-    padding-right: 0;
-    padding-left: 15px;
-    text-align: left;
-    font-size: 38px;
-    /* font-weight: bold; */
-    margin-bottom: 20px;
-    margin-right: 0;
-    border: black solid 0.05rem;
-}
-
-h3 {
-    color: #6c6364;
-    font-size: 2rem;
-}
-
-#year, #proficient {
-    color: black;
-    margin-top: 0;
-    text-align: left;
 }
 
 .form-group {
@@ -98,21 +58,12 @@ label {
     color: black;
 }
 
-Select {
-    color: black;
-}
-
 input, select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 0px;
-    margin-top: 20px;
-}
-
-option {
-    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .logOutButton {
@@ -128,21 +79,18 @@ option {
     width: 15%;
     align-items: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
- 
-  .logOutButton:hover {
+}
+
+.logOutButton:hover {
     background-color: #457EAC;
     transform: translateY(-2px);
-  }
- 
-  .logOutButton:active {
+}
+
+.logOutButton:active {
     transform: translateY(0);
-  }
+}
 
 .dotted-line {
     border-top: 2px dotted #000;
     margin: 20px 0;
 }
-
-
-    
