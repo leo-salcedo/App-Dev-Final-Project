@@ -65,7 +65,7 @@ const click = (label: string) => {
   if (label === "Bootcamp Homework"){
     return;
   }
-  window.location.href = '/homework/${label}';
+  window.location.href = '#/Homework/${label}';
 };
 
 function Tree(){

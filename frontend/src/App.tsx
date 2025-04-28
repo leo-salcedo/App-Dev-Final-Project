@@ -19,15 +19,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path = "" element={<SignIn />} />
-        <Route path = "/Landing" element={<Landing />} />
-        <Route path = "/Profile" element = {<Profile/>}/>
-        <Route path = "/Homework" element = {<Tree/>}/>
-        <Route path = "/Leaderboard" element = {<Leaderboard/>}></Route>
-        {/* <Route path = "/Questions" element = {<Questions/>} ></Route> */}
-
         <Route path = "/" element={<SignIn />} />
-        <Route path = "/tree" element={<Tree />} />
+        <Route path = "/Landing" element={<Landing />} />
+        <Route path = "/Profile" element = {<Profile />}/>
+        <Route path = "/Homework" element = {<Tree />}/>
+        <Route path = "/Leaderboard" element = {<Leaderboard />}></Route>
+        <Route path="/Homework/:id" element={<Questions />} />
       </Routes>
     </Router>
   );
