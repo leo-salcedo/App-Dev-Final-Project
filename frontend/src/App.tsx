@@ -28,6 +28,8 @@ function App() {
         <Route path = "/SignIn" element={<SignIn />} />
 
         {/* <Route path = "/tree" element={<Tree />} /> */}
+        <Route path="/Homework/:id" element={<Questions />} />
+        
       </Routes>
     </Router>
   );
