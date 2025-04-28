@@ -19,7 +19,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path = "" element={<SignIn />} />
+        <Route path = "/" element={<SignIn />} />
         <Route path = "/Landing" element={<Landing />} />
         <Route path = "/Profile" element = {<Profile />}/>
         <Route path = "/Homework" element = {<Tree />}/>

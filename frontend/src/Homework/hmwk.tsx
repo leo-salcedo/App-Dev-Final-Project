@@ -61,16 +61,17 @@ const treeData: TreeNode = {
   ],   
 };
 
-const navigate = useNavigate();
 
-const click = (label: string) => {
+function Tree(){
+  const navigate = useNavigate();
+
+  const click = (label: string) => {
   if (label === "Bootcamp Homework"){
     return;
   }
-  navigate('/Homework/${label}');
-};
-
-function Tree(){
+    navigate('/Homework/${label}');
+  };
+  
   const makeTree = (node: TreeNode) => {
     return (
       <div className = "tree-node">
