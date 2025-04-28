@@ -1,5 +1,6 @@
 import React from 'react'
 import Sidebar from '../Sidebar/Sidebar.tsx';
+import {useNavigate} from 'react-router-dom';
 import './hmwk.css';
 
 type TreeNode = {
@@ -60,12 +61,13 @@ const treeData: TreeNode = {
   ],   
 };
 
-// you should make the nodes change dynamically and scale with the screen
+const navigate = useNavigate();
+
 const click = (label: string) => {
   if (label === "Bootcamp Homework"){
     return;
   }
-  window.location.href = '#/Homework/${label}';
+  navigate('/Homework/${label}');
 };
 
 function Tree(){
