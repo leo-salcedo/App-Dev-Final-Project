@@ -1,11 +1,18 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
 .tree-container {
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   overflow: auto;
+  flex-grow: 1;
 }
 
 .tree-node {
@@ -39,7 +46,7 @@
   position: relative;
 }
 
-.rectangle-text{
+.rectangle-text {
   font-weight: bold;
   font-size: 25px;
   color: white;
@@ -71,8 +78,5 @@
   font-size: 20px;
   color: white;
   margin-top: 40px;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
- 
-
-  
