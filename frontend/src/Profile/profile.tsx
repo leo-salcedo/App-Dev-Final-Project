@@ -17,9 +17,9 @@ const Profile = () => {
         return stored ? JSON.parse(stored) : [];
     });
 
-    const handleLogout = () => {
+    const handleLogout = ()=> {
         localStorage.clear();
-        navigate('/login');
+        navigate('/SignIn');
     };
 
     const years = [
