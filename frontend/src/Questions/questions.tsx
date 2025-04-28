@@ -7,7 +7,7 @@ function Questions() {
     const { id } = useParams();
 
     const [directions, setDirections] = useState('');
-    const [status, setStatus] = useState('not started');
+    const [status, setStatus] = useState('not-started');
     
     return (
         <div className = "page-container">
@@ -30,10 +30,16 @@ function Questions() {
 
                 <div className = "homework-status">
                     <label>Status:</label>
-                    <select value = {status} onChange = {(e) => setStatus(e.target.value)}>
+                    <select 
+                        value = {status} 
+                        onChange = {(e) => {
+                            setStatus(e.target.value);
+                            localStorage.setItem(`status-${id}`, e.target.value);
+                        }}
+                    >
                         <option value="completed">Completed</option>
-                        <option value="in progress">In Progress</option>
-                        <option value="not started">Not Started</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="not-started">Not Started</option>
                     </select>
                 </div>
             </div>

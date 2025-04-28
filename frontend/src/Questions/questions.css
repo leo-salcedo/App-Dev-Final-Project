@@ -6,8 +6,6 @@
     background-color: rgb(55, 109, 142);
     justify-content: center;
     min-height: 100%;
-    
-
 }
 
 h1{
@@ -43,7 +41,7 @@ h1{
 .homework-status select {
     padding: 8px;
     font-size: 16px;
-    background-color: aliceblue;
+    background-color: rgb(64, 153, 231);
 }
 
 .back-button {
