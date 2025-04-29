@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request 
+from fastapi import FastAPI, Form, Request
 import os
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
+from motor.motor_asyncio import AsyncIOMotorClient
 
 app = FastAPI()
 
@@ -13,6 +14,11 @@ GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 REDIRECT_URI = os.getenv("REDIRECT_URI")
 FRONTEND_LINK = os.getenv("PERSONAL_LINK_FRONT")
 
+
+MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"  # Replace with your Atlas connection string
+client = AsyncIOMotorClient(MONGO_URL, tls=True, tlsAllowInvalidCertificates=True)
+db = client["websiteInfo"]           
+users_collection = db["emails"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,4 +47,14 @@ async def auth_callback(request: Request):
     # Redirect to frontend (React)
     return RedirectResponse(FRONTEND_LINK + "/#/Homework")
 
+@app.post("/regLogin")
+async def regularLogin(fname: str = Form(...), lname: str = Form(...)):
+
+
+    new_user = {
+        "fname": fname,
+        "lname": lname
+    }
+    await users_collection.insert_one(new_user)
+    return RedirectResponse(FRONTEND_LINK + "/#/Homework", status_code=303)
 
