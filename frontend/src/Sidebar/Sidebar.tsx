@@ -9,7 +9,7 @@ const Sidebar = () => {
    <div className="sidebar">
 
       <img
-          src="/____/____.png" 
+          src="/App_Dev-logo.png" 
           alt="App Dev Bootcamp" 
           className="sidebar-logo" 
           width="50" 
@@ -21,13 +21,13 @@ const Sidebar = () => {
      </Link> */}
     
      <nav className="menu">
-       <Link to="/homework" className={`menu-item ${location.pathname === '/hmwk' ? 'active' : ''}`}>
-         <i className="fas fa-search"></i>
+       <Link to="/homework" className={`menu-item ${location.pathname === '/homework' ? 'active' : ''}`}>
+         <i className="fas fa-pencil"></i>
          <span>Homework</span>
        </Link>
       
        <Link to="/gradebook" className={`menu-item ${location.pathname === '/gradebook' ? 'active' : ''}`}>
-         <i className="fas fa-comments"></i>
+         <i className="fas fa-clipboard"></i>
          <span>Gradebook</span>
        </Link>
       
