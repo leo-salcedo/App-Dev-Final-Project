@@ -12,7 +12,10 @@ function Questions() {
     return (
         <div className = "page-container">
             <div className = "homework-container">
-                <div className = "back-button" onClick = {() => navigate('/Homework')}>
+                <div className = "back-button" onClick = {() => {
+                    navigate('/Homework');
+                    window.location.reload();
+                }}>
                     ← Back to Homework Tree
                 </div>
 

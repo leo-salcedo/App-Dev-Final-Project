@@ -93,10 +93,13 @@ function Tree(){
       if (status === 'completed') {
         completed++;
       } 
-      else if (status === 'in progress') {
+      else if (status === 'in-progress') {
         inProgress++;
       }
-      else {
+      else if (status === 'not-started') {
+        notStarted++;
+      }
+      else{
         notStarted++;
       }
     });
