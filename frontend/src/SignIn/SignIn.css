@@ -1,0 +1,15 @@
+.links {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+/* I am gonna try messing with this later */
+.title { 
+    display: flex;
+    justify-content: center;
+}
+
+.loginid {
+    display: flex;
+    justify-content: center;
+}

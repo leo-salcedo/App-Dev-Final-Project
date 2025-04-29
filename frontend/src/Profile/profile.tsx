@@ -22,6 +22,19 @@ const Profile = () => {
         navigate('/SignIn');
     };
 
+    const customSelectStyles = {
+      control: (provided) => ({
+        ...provided,
+        color: "#000000",
+        cursor: 'pointer',
+      }),
+      option: (provided, state) => ({
+        ...provided,
+        color: "#000000",
+        cursor: 'pointer',
+      }),
+    };
+
     const years = [
         { value: 'Freshman', label: 'Freshman' },
         { value: 'Sophomore', label: 'Sophomore' },
@@ -50,14 +63,14 @@ const Profile = () => {
                     <form>
                         <div className="form-group">
                             <label id="labelName" htmlFor="year">Year in College:</label>
-                            <Select id="year" options={years} value={year} onChange={setYear} />
+                            <Select id="year" options={years} value={year} onChange={setYear} styles={customSelectStyles} />
 
                             //**use isMulti to the right of id for multiple selection enabled! - Maggie
 
                         </div>
                         <div className="form-group">
                             <label id="labelName" htmlFor="proficient">Coding Proficiency:</label>
-                            <Select id="proficient" options={proficients} value={proficient} onChange={setProficient} />
+                            <Select id="proficient" options={proficients} value={proficient} onChange={setProficient} styles={customSelectStyles} />
                         </div>
                     </form>
                 </div>

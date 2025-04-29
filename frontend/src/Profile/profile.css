@@ -82,7 +82,7 @@ input, select {
 }
 
 .logOutButton:hover {
-    background-color: #457EAC;
+    background-color: #c1cad2;
     transform: translateY(-2px);
 }
 
@@ -94,3 +94,4 @@ input, select {
     border-top: 2px dotted #000;
     margin: 20px 0;
 }
+
