@@ -39,6 +39,6 @@ async def auth_callback(request: Request):
     # (You can still keep the token exchange + user fetching here)
 
     # Redirect to frontend (React)
-    return RedirectResponse(FRONTEND_LINK + "/#/tree")
+    return RedirectResponse(FRONTEND_LINK + "/#/Homework")
 
 
