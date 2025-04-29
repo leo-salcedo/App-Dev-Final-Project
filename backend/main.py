@@ -1,9 +1,10 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, Form, Request
 import os
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+import httpx
 
 app = FastAPI()
 
@@ -16,7 +17,7 @@ FRONTEND_LINK = os.getenv("PERSONAL_LINK_FRONT")
 
 
 MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"  # Replace with your Atlas connection string
-client = AsyncIOMotorClient(MONGO_URL, tls=True, tlsAllowInvalidCertificates=True)
+client = AsyncIOMotorClient(MONGO_URL)
 db = client["websiteInfo"]           
 users_collection = db["emails"]
 
@@ -42,19 +43,51 @@ def signin():
 async def auth_callback(request: Request):
     code = request.query_params.get("code")
 
-    # (You can still keep the token exchange + user fetching here)
+    # Step 2: Exchange code for access_token
+    token_url = "https://oauth2.googleapis.com/token"
 
-    # Redirect to frontend (React)
-    return RedirectResponse(FRONTEND_LINK + "/#/Homework")
+    async with httpx.AsyncClient() as client:
+        token_response = await client.post(token_url, data={
+            "code": code,
+            "client_id": GOOGLE_CLIENT_ID,
+            "client_secret": GOOGLE_CLIENT_SECRET,
+            "redirect_uri": REDIRECT_URI,
+            "grant_type": "authorization_code"
+        })
 
-@app.post("/regLogin")
-async def regularLogin(fname: str = Form(...), lname: str = Form(...)):
+        token_response_data = token_response.json()
+        access_token = token_response_data["access_token"]
+
+        # Step 3: Fetch user info from Google
+        userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
+        userinfo_response = await client.get(
+            userinfo_url,
+            headers={"Authorization": f"Bearer {access_token}"}
+        )
+
+        google_user_info = userinfo_response.json()
+
+    # google_user_info now contains {"name": ..., "email": ..., "picture": ..., etc.}
+
+    # (Optional) Insert into MongoDB
+    existing_user = await users_collection.find_one({"email": google_user_info["email"]})
+    if not existing_user:
+        await users_collection.insert_one({
+            "name": google_user_info["name"],
+            "email": google_user_info["email"]
+        })
 
 
-    new_user = {
-        "fname": fname,
-        "lname": lname
-    }
-    await users_collection.insert_one(new_user)
-    return RedirectResponse(FRONTEND_LINK + "/#/Homework", status_code=303)
+    user_name = google_user_info["name"]
+    user_email = google_user_info["email"]
+
+    redirect_url = (
+        f"{FRONTEND_LINK}/#/Homework?"
+        f"name={user_name}&"
+        f"email={user_email}"
+    )
+
+    return RedirectResponse(redirect_url, status_code=303)
+    
+
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar.tsx';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import './hmwk.css';
 
 type TreeNode = {
@@ -71,6 +71,20 @@ function Tree(){
   }
     navigate(`/Homework/${label}`);
   };
+
+  //backend stuff
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const name = queryParams.get("name");
+  const email = queryParams.get("email");
+
+  useEffect(() => {
+    if (name && email) {
+      localStorage.setItem("name", name);
+      localStorage.setItem("email", email);
+    }
+  }, [name, email]);
 
   const getProgressCounts = () => {
     let completed = 0;
