@@ -8,11 +8,17 @@ const backendUrl = import.meta.env.VITE_BACKEND;
 import Gradebook from "./Gradebook/gradebook.tsx"
 import Questions from "./Questions/questions.tsx"
 
-const Landing = ()=> (
+const Landing = () => (
   <div className="App">
-      <h1>Homework Tree</h1>
-    </div>
-)
+    <h1>Welcome to the Homework Tree</h1>
+    <p>Start by selecting a page below:</p>
+    <nav>
+      <Link to="/Profile">Go to Profile</Link><br />
+      <Link to="/Homework">View Homework Tree</Link><br />
+      <Link to="/Gradebook">View Gradebook</Link>
+    </nav>
+  </div>
+);
 
 function App() {
   return (

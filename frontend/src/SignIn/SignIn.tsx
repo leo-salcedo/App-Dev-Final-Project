@@ -1,41 +1,29 @@
-import { useEffect } from "react";
-import "./SignIn.css"
-import { Link, useNavigate } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
+import "./SignIn.css";
 
 const backendUrl = import.meta.env.VITE_BACKEND;
 
 const handleLogin = () => {
-    window.location.href = `${backendUrl}/login`;
+  window.location.href = `${backendUrl}/login`;
 };
 
-const SignIn = ()=> {
-    
-    
-    return (
-      <div>
-        <div className="title">
-          <h1>Bootcamp Backpack!</h1>
-        </div>
-        <button className="loginid" onClick={handleLogin}>
-          Login with Google
-        </button>
+const SignIn = () => {
+  return (
+    <div className="signin-container">
+      <h1>Bootcamp Backpack 🎒</h1>
+      <p className="subtitle">Your hub for homework, progress, and practice!</p>
 
-        <ul className="links">
-          <li>
-            <Link to="/Homework">Homework</Link>
-          </li>
-          <li>
-            <Link to="/Profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/Gradebook">Gradebook</Link>
-          </li>
-        </ul>
-      </div>
-    );};
+      <button className="login-button" onClick={handleLogin}>
+        Login with Google
+      </button>
 
-
+      <ul className="nav-links">
+        <li><Link to="/Homework">Homework</Link></li>
+        <li><Link to="/Profile">Profile</Link></li>
+        <li><Link to="/Gradebook">Gradebook</Link></li>
+      </ul>
+    </div>
+  );
+};
 
 export default SignIn;
-
