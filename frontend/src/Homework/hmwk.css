@@ -136,3 +136,18 @@
   font-weight: bold;
   color: white;
 }
+
+.form-button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: black;
+}

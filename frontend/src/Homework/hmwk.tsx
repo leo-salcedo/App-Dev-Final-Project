@@ -61,6 +61,14 @@ const treeData: TreeNode = {
   ],   
 };
 
+const formLinks: Record<string, string> = {
+  "1B": "https://forms.gle/MQejHVuzuVzj3uGE7",
+  "2B": "https://docs.google.com/forms/d/e/1FAIpQLSfQFK17245tRC6FuoOYBBozy_n13Cna7hc9ygjz0IPMjpUQGA/viewform",
+  "3A": "https://docs.google.com/forms/d/e/1FAIpQLSfXbxbAbiH_0DyQMpA7VvUYZm30wV5rlo9qZ5dIjdYvo-FkYg/viewform",
+  "3B": "https://docs.google.com/forms/d/e/1FAIpQLSdeaQtCgkg7PvP_TIEIB5a7X5S4MFD56JLNeS4PWycqBGi31w/viewform",
+  "5A": "https://docs.google.com/forms/d/e/1FAIpQLSdCJf5qmoTF-cUzs_HsItw3PRCkkd2DaXCBGRsc5Esqj3hyOg/viewform",
+};
+
 
 function Tree(){
   const navigate = useNavigate();
@@ -151,6 +159,17 @@ function Tree(){
           </div>
         </div>
 
+        {formLinks[node.label] && (
+          <button
+          className = "form-button"
+          onClick = {(e) => {
+            e.stopPropagation();
+            window.open(formLinks[node.label], "_blank");
+          }}
+        >
+          Submit Form
+        </button>
+        )}
 
         {node.children && (
           <div className = "tree-children">
