@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar.tsx';
 import {useLocation, useNavigate} from 'react-router-dom';
 import './hmwk.css';
+
+const backendUrl = import.meta.env.VITE_BACKEND;
 
 type TreeNode = {
   label: string;
@@ -69,9 +71,79 @@ const formLinks: Record<string, string> = {
   "5A": "https://docs.google.com/forms/d/e/1FAIpQLSdCJf5qmoTF-cUzs_HsItw3PRCkkd2DaXCBGRsc5Esqj3hyOg/viewform",
 };
 
+const updateHomeworkStatus = async (label: string, newStatus: string) => {
+  const email = localStorage.getItem('email');
+  if (!email) {
+    console.error('User email not found');
+    return;
+  }
+
+  try {
+    const response = await fetch(`${backendUrl}/api/homework/status`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        homeworkId: label,
+        status: newStatus,
+      }),
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update homework status');
+    }
+
+    // Update local storage after successful backend update
+    localStorage.setItem(`status-${label}`, newStatus);
+    
+    // Force a re-render
+    window.location.reload();
+  } catch (error) {
+    console.error('Error updating homework status:', error);
+  }
+};
 
 function Tree(){
   const navigate = useNavigate();
+  const [statusUpdating, setStatusUpdating] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadHomeworkStatus = async () => {
+      const email = localStorage.getItem('email');
+      if (!email) {
+        console.error('User email not found');
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${backendUrl}/api/homework/status/${email}`, {
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch homework status');
+        }
+
+        const statuses = await response.json();
+        
+        // Update local storage with fetched statuses
+        statuses.forEach((status: { homeworkId: string; status: string }) => {
+          localStorage.setItem(`status-${status.homeworkId}`, status.status);
+        });
+      } catch (error) {
+        console.error('Error loading homework status:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadHomeworkStatus();
+  }, []);
 
   const click = (label: string) => {
   if (label === "Bootcamp Homework"){
@@ -136,6 +208,29 @@ function Tree(){
   const inProgressPercent = (inProgress / total) * 100;
   const notStartedPercent = (notStarted / total) * 100;
 
+  const handleStatusChange = (label: string, currentStatus: string) => {
+    if (label === "Bootcamp Homework") return;
+    
+    let newStatus: string;
+    switch (currentStatus) {
+      case 'not-started':
+        newStatus = 'in-progress';
+        break;
+      case 'in-progress':
+        newStatus = 'completed';
+        break;
+      case 'completed':
+        newStatus = 'not-started';
+        break;
+      default:
+        newStatus = 'not-started';
+    }
+
+    setStatusUpdating(label);
+    updateHomeworkStatus(label, newStatus)
+      .finally(() => setStatusUpdating(null));
+  };
+
   const makeTree = (node: TreeNode) => {
     const savedStatus = localStorage.getItem(`status-${node.label}`) || node.color;
 
@@ -153,9 +248,18 @@ function Tree(){
 
     return (
       <div className = "tree-node">
-        <div className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} onClick={() => click(node.label)}>
+        <div 
+          className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} 
+          onClick={() => click(node.label)}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            handleStatusChange(node.label, savedStatus);
+          }}
+          style={{ cursor: statusUpdating === node.label ? 'wait' : 'pointer' }}
+        >
           <div className={node.label === "Bootcamp Homework" ? "rectangle-text" : "triangle-text"}>
             {node.label}
+            {statusUpdating === node.label && <span className="status-updating"> ...</span>}
           </div>
         </div>
 
@@ -194,20 +298,26 @@ function Tree(){
     <div className = "page-container"> 
       <Sidebar />
       <div className = "tree-container">
-        <div className = "progress-section">
-          <div className="progress-bar">
-            <div className = "progress-completed" style = {{width: `${completedPercent}%` }}/>
-            <div className = "progress-in-progress" style = {{width: `${inProgressPercent}%` }}/>
-            <div className = "progress-not-started" style = {{width: `${notStartedPercent}%` }}/>
-          </div>
+        {isLoading ? (
+          <div className="loading-spinner">Loading homework status...</div>
+        ) : (
+          <>
+            <div className = "progress-section">
+              <div className="progress-bar">
+                <div className = "progress-completed" style = {{width: `${completedPercent}%` }}/>
+                <div className = "progress-in-progress" style = {{width: `${inProgressPercent}%` }}/>
+                <div className = "progress-not-started" style = {{width: `${notStartedPercent}%` }}/>
+              </div>
 
-          <div className = "progress-labels">
-            <span>Completed: {completed}</span>
-            <span>In Progress: {inProgress}</span>
-            <span>Not Started: {notStarted}</span>
-          </div>
-        </div>
-        {makeTree(treeData)}
+              <div className = "progress-labels">
+                <span>Completed: {completed}</span>
+                <span>In Progress: {inProgress}</span>
+                <span>Not Started: {notStarted}</span>
+              </div>
+            </div>
+            {makeTree(treeData)}
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 from dotenv import load_dotenv
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, HTTPException
+from pydantic import BaseModel
 import os
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import httpx
+import datetime
 
 app = FastAPI()
 
@@ -28,6 +30,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add Pydantic model for homework status update
+class HomeworkStatusUpdate(BaseModel):
+    email: str
+    homeworkId: str
+    status: str
 
 @app.get("/login")
 def signin():
@@ -89,5 +97,51 @@ async def auth_callback(request: Request):
 
     return RedirectResponse(redirect_url, status_code=303)
     
+
+@app.post("/api/homework/status")
+async def update_homework_status(status_update: HomeworkStatusUpdate):
+    try:
+        # Check if user exists
+        user = await users_collection.find_one({"email": status_update.email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        # Update or create homework status
+        result = await db.homework_status.update_one(
+            {
+                "email": status_update.email,
+                "homeworkId": status_update.homeworkId
+            },
+            {
+                "$set": {
+                    "status": status_update.status,
+                    "lastUpdated": datetime.datetime.utcnow()
+                }
+            },
+            upsert=True
+        )
+
+        return {"message": "Status updated successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/homework/status/{email}")
+async def get_homework_status(email: str):
+    try:
+        # Check if user exists
+        user = await users_collection.find_one({"email": email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        # Get all homework statuses for the user
+        statuses = await db.homework_status.find({"email": email}).to_list(length=100)
+        
+        # Convert ObjectId to string for JSON serialization
+        for status in statuses:
+            status["_id"] = str(status["_id"])
+        
+        return statuses
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
