@@ -29,11 +29,9 @@ function App() {
         <Route path = "/Profile" element = {<Profile/>}/>
         <Route path = "/Homework" element = {<Tree/>}/>
         <Route path = "/Gradebook" element = {<Gradebook/>}></Route>
-        {/* <Route path = "/Questions" element = {<Questions/>} ></Route> */}
 
         <Route path = "/SignIn" element={<SignIn />} />
 
-        {/* <Route path = "/tree" element={<Tree />} /> */}
         <Route path="/Homework/:id" element={<Questions />} />
         
       </Routes>
