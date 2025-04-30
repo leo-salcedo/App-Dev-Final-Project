@@ -14,15 +14,25 @@ const SignIn = ()=> {
     
     return (
       <div>
-        <button onClick={handleLogin}>Login with Google</button>
-        
-        <ul>
-          <li><Link to ="/Homework">Homework</Link></li>
-          <li><Link to ="/Profile">Profile</Link></li>
-          <li><Link to ="/Gradebook">Gradebook</Link></li>
-        </ul>
-       
+        <div className="title">
+          <h1>Bootcamp Backpack!</h1>
         </div>
+        <button className="loginid" onClick={handleLogin}>
+          Login with Google
+        </button>
+
+        <ul className="links">
+          <li>
+            <Link to="/Homework">Homework</Link>
+          </li>
+          <li>
+            <Link to="/Profile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/Gradebook">Gradebook</Link>
+          </li>
+        </ul>
+      </div>
     );};
 
 
