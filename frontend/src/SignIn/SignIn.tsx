@@ -10,8 +10,8 @@ const handleLogin = () => {
 const SignIn = () => {
   return (
     <div className="signin-container">
-      <h1>Bootcamp Backpack 🎒</h1>
-      <p className="subtitle">Your hub for homework, progress, and practice!</p>
+      <h1>Welcome to Bootcamp Backpack 🎒</h1>
+      <p className="subtitle">Your home for homework, progress, and practice!</p>
 
       <button className="login-button" onClick={handleLogin}>
         Login with Google
@@ -19,8 +19,8 @@ const SignIn = () => {
 
       <ul className="nav-links">
         <li><Link to="/Homework">Homework</Link></li>
-        <li><Link to="/Profile">Profile</Link></li>
         <li><Link to="/Gradebook">Gradebook</Link></li>
+        <li><Link to="/Profile">Profile</Link></li>
       </ul>
     </div>
   );
