@@ -37,17 +37,25 @@ const Gradebook = () => {
   }, []);
 
   const calculateTotalGrade = (updatedAssignments) => {
-    const currentDate = new Date();
+    // const currentDate = new Date();
     let grade = 100;
+    let count = assignments.length;
+    let percent = grade/count;
 
     updatedAssignments.forEach(assignment => {
-      const dueDate = new Date(assignment.dueDate);
-      if (assignment.status !== 'completed' && dueDate < currentDate) {
-        grade -= 10;
+      if (assignment.status !== 'completed') {
+        grade -= percent;
       }
     });
 
-    setTotalGrade(grade);
+    // updatedAssignments.forEach(assignment => {
+    //   const dueDate = new Date(assignment.dueDate);
+    //   if (assignment.status !== 'completed' && dueDate < currentDate) {
+    //     grade -= 10;
+    //   }
+    // });
+
+    setTotalGrade(Math.round(grade));
   };
 
   return (
@@ -56,7 +64,7 @@ const Gradebook = () => {
 
       <div className="header">
         <h2>Gradebook</h2>
-        <h2 className="total-grade">Current Grade: {totalGrade}%</h2>
+        <h2 className="total-grade">Total Grade: {totalGrade}%</h2>
       </div>
 
       <div className="assignments">
