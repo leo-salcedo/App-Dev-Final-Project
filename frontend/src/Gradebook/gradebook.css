@@ -1,3 +1,7 @@
+. body {
+    background-color: #2A52BE;
+}
+
 .gradebook {
     display: flex;
     flex-direction: column;
@@ -5,8 +9,9 @@
     align-items: center;
     
     width: 100vw;
-    height: 100vh;
-    background-color: #457EAC;
+    min-height: 100vh;
+
+    margin-left: 40px;
 }
 
 .header {
@@ -15,9 +20,11 @@
     align-items: center;
 
     width: 80%;
-    background-color: #2D5D7B;
+    background-color: #030303;
+    border: 2px solid #ffffff30;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
+    border-radius: 20px;
 }
 
 h2 {

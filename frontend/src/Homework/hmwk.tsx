@@ -174,7 +174,7 @@ function Tree(){
         {node.children && (
           <div className = "tree-children">
             {node.children.map((child, i) => (
-              <div key = {i} className="tree.branch">
+              <div key = {i} className="tree-branch">
                 <div className = {
                   node.children.length === 2 ? 
                   i === 0 ? 'line-left' : 'line-right' 

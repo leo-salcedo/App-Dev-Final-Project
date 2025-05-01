@@ -58,6 +58,7 @@ const Profile = () => {
         <div className="account-page">
             <Sidebar />
             <div className="merged-container">
+                <div></div>
                 <div className="header-container">Profile</div>
                 <div className="section1">
                     <form>
@@ -80,7 +81,9 @@ const Profile = () => {
                 <div className="section2">
                     <form>
                         <div className="form-group">
+                            <div className = "button-container">
                             <button type="button" onClick={handleLogout} className="logOutButton">Log Out</button>
+                            </div>
                         </div>
                     </form>
                 </div>
