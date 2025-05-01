@@ -16,10 +16,6 @@ const Sidebar = () => {
           height="50" 
         />
         <link rel="stylesheet" href="" />
-
-     {/* <Link to="/post" className="plus-btn">
-            <i className="fa-solid fa-plus"></i>
-     </Link> */}
     
      <nav className="menu">
        <Link to="/homework" className={`menu-item ${location.pathname === '/homework' ? 'active' : ''}`}>
