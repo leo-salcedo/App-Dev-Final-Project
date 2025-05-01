@@ -105,10 +105,12 @@ html, body {
     display: flex;
     justify-content: center;
     padding: 20px;
+    background-color: 
   }
   
   .logOutButton {
     color: white;
+    background-color: #274960;
     padding: 12px 28px;
     font-size: 16px;
     font-weight: 600;
@@ -131,6 +133,10 @@ html, body {
   .dotted-line {
     border-top: 2px dotted #ccc;
     margin: 20px 0;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
   }
   
   

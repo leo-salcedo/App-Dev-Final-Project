@@ -86,6 +86,14 @@ async def auth_callback(request: Request):
     progress_data["email"] = user_email
 
     existing_user = await users_collection.find_one({"email": user_email})
+    
+    if existing_user:
+        for field in ["year", "proficient", "pronoun"]:
+            if field in existing_user:
+                progress_data[field] = existing_user[field]
+
+    # Check for existing user
+    existing_user = await users_collection.find_one({"email": user_email})
 
     if existing_user:
         saved_progress = {k: v for k, v in existing_user.items() if k.startswith("status-")}

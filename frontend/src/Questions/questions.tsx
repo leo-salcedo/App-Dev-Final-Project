@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import './questions.css'
 
@@ -6,7 +6,7 @@ function Questions() {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const [directions, setDirections] = useState('');
+    //const [directions, setDirections] = useState('');
     const [status, setStatus] = useState('not-started');
 
     useEffect(() => {

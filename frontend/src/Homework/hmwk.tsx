@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './hmwk.css';
-
-const backendUrl = import.meta.env.VITE_BACKEND;
 
 type TreeNode = {
   label: string;
@@ -113,7 +111,7 @@ function Tree() {
     }
   };
 
-  const makeTree = (node: TreeNode) => {
+  const makeTree = (node: TreeNode): JSX.Element => {
     const savedStatus = localStorage.getItem(`status-${node.label}`) || node.color;
     const colorClass = savedStatus === 'completed'
       ? 'completed'
@@ -123,8 +121,17 @@ function Tree() {
 
     return (
       <div className="tree-node">
-        <div className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} onClick={() => click(node.label)}>
-          <div className={node.label === "Bootcamp Homework" ? "rectangle-text" : "triangle-text"}>
+        <div
+          className={
+            node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`
+          }
+          onClick={() => click(node.label)}
+        >
+          <div
+            className={
+              node.label === "Bootcamp Homework" ? "rectangle-text" : "triangle-text"
+            }
+          >
             {node.label}
           </div>
         </div>
@@ -141,15 +148,19 @@ function Tree() {
           </button>
         )}
 
-        {node.children && (
+        {Array.isArray(node.children) && node.children.length > 0 && (
           <div className="tree-children">
             {node.children.map((child, i) => (
               <div key={i} className="tree-branch">
-                <div className={
-                  node.children.length === 2
-                    ? i === 0 ? 'line-left' : 'line-right'
-                    : 'line-straight'
-                }></div>
+                <div
+                  className={
+                    node.children!.length === 2
+                      ? i === 0
+                        ? "line-left"
+                        : "line-right"
+                      : "line-straight"
+                  }
+                ></div>
                 {makeTree(child)}
               </div>
             ))}
