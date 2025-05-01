@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar.tsx';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './hmwk.css';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL; // change if using deployed backend
 
 type TreeNode = {
   label: string;
@@ -13,43 +15,31 @@ const treeData: TreeNode = {
   label: 'Bootcamp Homework',
   color: 'not-started',
   children: [
-      {
-          label: '1A',
-          color: 'not-started',
-          children: [
-              { label: '1B', color: 'not-started' },
-              { label: '1C', color: 'not-started' },
-          ],
-      },
-      {
-          label: '2A',
-          color: 'not-started',
-          children: [
-              { label: '2B', color: 'not-started' },
-          ],
-      },
-      {
-        label: '3A',
-        color: 'not-started',
-        children: [
-            { label: '3B', color: 'not-started' },
-        ],
-    }, 
     {
-      label: '4A',
+      label: '1A',
       color: 'not-started',
       children: [
-          { label: '4B', color: 'not-started' },
+        { label: '1B', color: 'not-started' },
+        { label: '1C', color: 'not-started' },
       ],
     },
     {
-      label: '5A',
+      label: '2A',
       color: 'not-started',
+      children: [{ label: '2B', color: 'not-started' }],
     },
     {
-      label: '6A',
+      label: '3A',
       color: 'not-started',
+      children: [{ label: '3B', color: 'not-started' }],
     },
+    {
+      label: '4A',
+      color: 'not-started',
+      children: [{ label: '4B', color: 'not-started' }],
+    },
+    { label: '5A', color: 'not-started' },
+    { label: '6A', color: 'not-started' },
     {
       label: '7A',
       color: 'not-started',
@@ -58,7 +48,7 @@ const treeData: TreeNode = {
         { label: '7C', color: 'not-started' },
       ],
     },
-  ],   
+  ],
 };
 
 const formLinks: Record<string, string> = {
@@ -69,91 +59,113 @@ const formLinks: Record<string, string> = {
   "5A": "https://docs.google.com/forms/d/e/1FAIpQLSdCJf5qmoTF-cUzs_HsItw3PRCkkd2DaXCBGRsc5Esqj3hyOg/viewform",
 };
 
-
-function Tree(){
+function Tree() {
   const navigate = useNavigate();
-
-  const click = (label: string) => {
-  if (label === "Bootcamp Homework"){
-    return;
-  }
-    navigate(`/Homework/${label}`);
-  };
-
-  //backend stuff
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-
-  const name = queryParams.get("name");
-  const email = queryParams.get("email");
+  const [name, setName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    if (name && email) {
-      localStorage.setItem("name", name);
-      localStorage.setItem("email", email);
+    const queryParams = new URLSearchParams(location.search);
+    const nameParam = queryParams.get("name");
+    const emailParam = queryParams.get("email");
+    if (nameParam && emailParam) {
+      localStorage.setItem("name", nameParam);
+      localStorage.setItem("email", emailParam);
+      setName(nameParam);
+      setEmail(emailParam);
+    } else {
+      const localName = localStorage.getItem("name");
+      const localEmail = localStorage.getItem("email");
+      setName(localName);
+      setEmail(localEmail);
     }
-  }, [name, email]);
+  }, [location.search]);
 
-  const getProgressCounts = () => {
-    let completed = 0;
-    let inProgress = 0;
-    let notStarted = 0;
+  const [statusMap, setStatusMap] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(true);
 
-    const allNodes = [
-      '1A', '1B', '1C',
-      '2A', '2B',
-      '3A', '3B',
-      '4A', '4B',
-      '5A', 
-      '6A',
-      '7A', '7B', '7C'
-    ];
+  
 
-    allNodes.forEach((label) => {
-      const status = localStorage.getItem(`status-${label}`);
-
-      if (status === 'completed') {
-        completed++;
-      } 
-      else if (status === 'in-progress') {
-        inProgress++;
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const res = await fetch(`${BACKEND_URL}/progress?email=${email}`);
+        const data = await res.json();
+        setStatusMap(data.progress || {});
+      } catch (err) {
+        console.error('Failed to fetch progress:', err);
+      } finally {
+        setLoading(false);
       }
-      else if (status === 'not-started') {
-        notStarted++;
-      }
-      else{
-        notStarted++;
-      }
-    });
+    };
 
-    return { completed, inProgress, notStarted };
+    if (email) {
+      fetchProgress();
+    } else {
+      setLoading(false);
+    }
+  }, [email]);
+
+  const saveProgressToBackend = async (updated: Record<string, string>) => {
+    try {
+      await fetch(`${BACKEND_URL}/progress`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          email: email || '',
+          progress: JSON.stringify(updated),
+        }),
+      });
+    } catch (err) {
+      console.error('Failed to save progress:', err);
+    }
   };
 
-  const {completed, inProgress, notStarted} = getProgressCounts();
-  const total = completed + inProgress + notStarted;
+  const toggleStatus = (label: string) => {
+    const current = statusMap[label] || 'not-started';
+    const next =
+      current === 'not-started' ? 'in-progress' :
+      current === 'in-progress' ? 'completed' :
+      'not-started';
+
+    const updated = {
+      ...statusMap,
+      [label]: next,
+    };
+
+    setStatusMap({ ...updated });
+    saveProgressToBackend(updated);
+  };
+
+  const completed = Object.values(statusMap).filter(s => s === 'completed').length;
+  const inProgress = Object.values(statusMap).filter(s => s === 'in-progress').length;
+  const notStarted = Object.values(statusMap).filter(s => s === 'not-started').length;
+  const total = completed + inProgress + notStarted || 1;
 
   const completedPercent = (completed / total) * 100;
   const inProgressPercent = (inProgress / total) * 100;
   const notStartedPercent = (notStarted / total) * 100;
 
+  const click = (label: string) => {
+    if (label !== "Bootcamp Homework") {
+      navigate(`/Homework/${label}`);
+    }
+  };
+
   const makeTree = (node: TreeNode) => {
-    const savedStatus = localStorage.getItem(`status-${node.label}`) || node.color;
+    const savedStatus = statusMap[node.label] || node.color;
 
     let colorClass = 'not-started';
-
-    if (savedStatus === 'completed'){
-      colorClass = 'completed';
-    } 
-    else if (savedStatus === 'in-progress'){
-      colorClass = 'in-progress';
-    }
-    else if (savedStatus === 'not-started'){
-      colorClass = 'not-started';
-    }
+    if (savedStatus === 'completed') colorClass = 'completed';
+    else if (savedStatus === 'in-progress') colorClass = 'in-progress';
 
     return (
-      <div className = "tree-node">
-        <div className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} onClick={() => click(node.label)}>
+      <div className="tree-node">
+        <div
+          className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`}
+          onClick={() => click(node.label)}
+        >
           <div className={node.label === "Bootcamp Homework" ? "rectangle-text" : "triangle-text"}>
             {node.label}
           </div>
@@ -161,47 +173,51 @@ function Tree(){
 
         {formLinks[node.label] && (
           <button
-          className = "form-button"
-          onClick = {(e) => {
-            e.stopPropagation();
-            window.open(formLinks[node.label], "_blank");
-          }}
-        >
-          Submit Form
-        </button>
+            className="form-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(formLinks[node.label], "_blank");
+            }}
+          >
+            Submit Form
+          </button>
         )}
 
         {node.children && (
-          <div className = "tree-children">
+          <div className="tree-children">
             {node.children.map((child, i) => (
-              <div key = {i} className="tree-branch">
-                <div className = {
-                  node.children.length === 2 ? 
-                  i === 0 ? 'line-left' : 'line-right' 
-                  : 'line-straight'
-                }></div>
-              {makeTree(child)}
+              <div key={i} className="tree-branch">
+                <div
+                  className={
+                    node.children.length === 2 ?
+                    i === 0 ? 'line-left' : 'line-right' :
+                    'line-straight'
+                  }
+                ></div>
+                {makeTree(child)}
               </div>
             ))}
           </div>
         )}
       </div>
-   );
+    );
   };
-  
+
+  if (loading) {
+    return <div className="tree-container">Loading...</div>;
+  }
 
   return (
-    <div className = "page-container"> 
+    <div className="page-container">
       <Sidebar />
-      <div className = "tree-container">
-        <div className = "progress-section">
+      <div className="tree-container">
+        <div className="progress-section">
           <div className="progress-bar">
-            <div className = "progress-completed" style = {{width: `${completedPercent}%` }}/>
-            <div className = "progress-in-progress" style = {{width: `${inProgressPercent}%` }}/>
-            <div className = "progress-not-started" style = {{width: `${notStartedPercent}%` }}/>
+            <div className="progress-completed" style={{ width: `${completedPercent}%` }} />
+            <div className="progress-in-progress" style={{ width: `${inProgressPercent}%` }} />
+            <div className="progress-not-started" style={{ width: `${notStartedPercent}%` }} />
           </div>
-
-          <div className = "progress-labels">
+          <div className="progress-labels">
             <span>Completed: {completed}</span>
             <span>In Progress: {inProgress}</span>
             <span>Not Started: {notStarted}</span>
@@ -212,4 +228,5 @@ function Tree(){
     </div>
   );
 }
+
 export default Tree;

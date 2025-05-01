@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import httpx
+import json
 
 app = FastAPI()
 
@@ -15,8 +16,7 @@ GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 REDIRECT_URI = os.getenv("REDIRECT_URI")
 FRONTEND_LINK = os.getenv("PERSONAL_LINK_FRONT")
 
-
-MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"  # Replace with your Atlas connection string
+MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"
 client = AsyncIOMotorClient(MONGO_URL)
 db = client["websiteInfo"]           
 users_collection = db["emails"]
@@ -43,7 +43,6 @@ def signin():
 async def auth_callback(request: Request):
     code = request.query_params.get("code")
 
-    # Step 2: Exchange code for access_token
     token_url = "https://oauth2.googleapis.com/token"
 
     async with httpx.AsyncClient() as client:
@@ -58,7 +57,6 @@ async def auth_callback(request: Request):
         token_response_data = token_response.json()
         access_token = token_response_data["access_token"]
 
-        # Step 3: Fetch user info from Google
         userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
         userinfo_response = await client.get(
             userinfo_url,
@@ -67,16 +65,13 @@ async def auth_callback(request: Request):
 
         google_user_info = userinfo_response.json()
 
-    # google_user_info now contains {"name": ..., "email": ..., "picture": ..., etc.}
-
-    # (Optional) Insert into MongoDB
     existing_user = await users_collection.find_one({"email": google_user_info["email"]})
     if not existing_user:
         await users_collection.insert_one({
             "name": google_user_info["name"],
-            "email": google_user_info["email"]
+            "email": google_user_info["email"],
+            "progress": {}  # add empty progress map
         })
-
 
     user_name = google_user_info["name"]
     user_email = google_user_info["email"]
@@ -88,6 +83,30 @@ async def auth_callback(request: Request):
     )
 
     return RedirectResponse(redirect_url, status_code=303)
-    
 
 
+@app.get("/progress")
+async def get_progress(email: str):
+    user = await users_collection.find_one({"email": email})
+    if user:
+        return {"progress": user.get("progress", {})}
+    return JSONResponse(status_code=404, content={"error": "User not found"})
+
+
+@app.post("/progress")
+async def update_progress(email: str = Form(...), progress: str = Form(...)):
+    try:
+        progress_dict = json.loads(progress)
+    except Exception as e:
+        return JSONResponse(status_code=400, content={"error": "Invalid JSON"})
+
+    print("Saving progress for:", email)
+    print("Progress data:", progress_dict)
+    result = await users_collection.update_one(
+        {"email": email},
+        {"$set": {"progress": progress_dict}}
+    )
+
+    if result.modified_count == 1 or result.matched_count == 1:
+        return {"message": "Progress updated"}
+    return JSONResponse(status_code=500, content={"error": "Update failed"})
