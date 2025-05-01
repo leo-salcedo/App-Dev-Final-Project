@@ -7,6 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import httpx
 import datetime
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -100,28 +105,43 @@ class HomeworkStatus(BaseModel):
 @app.post("/api/homework/status")
 async def update_homework_status(status: HomeworkStatus):
     try:
+        logger.info(f"Received status update request: {status.dict()}")
+        
         # Check if user exists
         user = await users_collection.find_one({"email": status.email})
         if not user:
+            logger.error(f"User not found: {status.email}")
             raise HTTPException(status_code=404, detail="User not found")
 
+        logger.info(f"User found: {user}")
+
+        # Create the update document
+        update_doc = {
+            "email": status.email,
+            "homeworkId": status.homeworkId,
+            "status": status.status,
+            "lastUpdated": datetime.datetime.utcnow()
+        }
+        
+        logger.info(f"Attempting to update MongoDB with: {update_doc}")
+
         # Update or create homework status
-        await homework_status_collection.update_one(
+        result = await homework_status_collection.update_one(
             {
                 "email": status.email,
                 "homeworkId": status.homeworkId
             },
             {
-                "$set": {
-                    "status": status.status,
-                    "lastUpdated": datetime.datetime.utcnow()
-                }
+                "$set": update_doc
             },
             upsert=True
         )
 
-        return {"message": "Status updated successfully"}
+        logger.info(f"MongoDB update result: {result.raw_result}")
+
+        return {"message": "Status updated successfully", "result": result.raw_result}
     except Exception as e:
+        logger.error(f"Error updating homework status: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

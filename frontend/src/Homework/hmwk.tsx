@@ -82,22 +82,32 @@ function Tree(){
       return;
     }
 
+    const requestBody = {
+      email: email,
+      homeworkId: label,
+      status: newStatus
+    };
+
+    console.log('Sending status update:', requestBody);
+    console.log('Backend URL:', backendUrl);
+
     try {
       const response = await fetch(`${backendUrl}/api/homework/status`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: email,
-          homeworkId: label,
-          status: newStatus
-        })
+        body: JSON.stringify(requestBody)
       });
 
       if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Failed to update status:', errorData);
         throw new Error('Failed to update status');
       }
+
+      const result = await response.json();
+      console.log('Status update successful:', result);
 
       // Update local storage after successful backend update
       localStorage.setItem(`status-${label}`, newStatus);
@@ -107,6 +117,8 @@ function Tree(){
   };
 
   const handleStatusChange = (label: string, currentStatus: string) => {
+    console.log('Right-click detected on:', label, 'Current status:', currentStatus);
+    
     if (label === "Bootcamp Homework") return;
     
     let newStatus: string;
@@ -124,6 +136,7 @@ function Tree(){
         newStatus = 'not-started';
     }
 
+    console.log('Changing status to:', newStatus);
     updateStatus(label, newStatus);
   };
 
@@ -211,6 +224,7 @@ function Tree(){
           className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} 
           onClick={() => click(node.label)}
           onContextMenu={(e) => {
+            console.log('Context menu event triggered');
             e.preventDefault();
             handleStatusChange(node.label, savedStatus);
           }}
