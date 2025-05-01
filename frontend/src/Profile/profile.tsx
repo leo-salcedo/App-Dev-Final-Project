@@ -33,7 +33,7 @@ const Profile = () => {
         color: "#000000",
         cursor: 'pointer',
       }),
-      option: (provided, state) => ({
+      option: (provided) => ({  //option: (provided, state) => ({
         ...provided,
         color: "#000000",
         cursor: 'pointer',

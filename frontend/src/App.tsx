@@ -4,7 +4,6 @@ import './App.css'
 import SignIn from "./SignIn/SignIn.tsx"
 import Profile from './Profile/profile.tsx'
 import Tree from './Homework/hmwk.tsx'; 
-const backendUrl = import.meta.env.VITE_BACKEND;
 import Gradebook from "./Gradebook/gradebook.tsx"
 import Questions from "./Questions/questions.tsx"
 
