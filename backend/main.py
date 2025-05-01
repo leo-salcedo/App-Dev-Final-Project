@@ -1,3 +1,4 @@
+import json
 from dotenv import load_dotenv
 from fastapi import FastAPI, Form, Request
 import os
@@ -5,6 +6,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import httpx
+import urllib
 
 app = FastAPI()
 
@@ -45,7 +47,7 @@ def signin():
 async def auth_callback(request: Request):
     code = request.query_params.get("code")
 
-    # Step 2: Exchange code for access_token
+    # Step 1: Exchange code for access_token
     token_url = "https://oauth2.googleapis.com/token"
 
     async with httpx.AsyncClient() as client:
@@ -60,7 +62,7 @@ async def auth_callback(request: Request):
         token_response_data = token_response.json()
         access_token = token_response_data["access_token"]
 
-        # Step 3: Fetch user info from Google
+        # Step 2: Fetch user info
         userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
         userinfo_response = await client.get(
             userinfo_url,
@@ -69,35 +71,64 @@ async def auth_callback(request: Request):
 
         google_user_info = userinfo_response.json()
 
-    # google_user_info now contains {"name": ..., "email": ..., "picture": ..., etc.}
-
-    # (Optional) Insert into MongoDB
-    existing_user = await users_collection.find_one({"email": google_user_info["email"]})
-    if not existing_user:
-        await users_collection.insert_one({
-            "name": google_user_info["name"],
-            "email": google_user_info["email"]
-        })
-
-
     user_name = google_user_info["name"]
     user_email = google_user_info["email"]
 
+    # Step 3: Fetch or create user progress
+    default_labels = [
+        '1A', '1B', '1C',
+        '2A', '2B',
+        '3A', '3B',
+        '4A', '4B',
+        '5A', '6A',
+        '7A', '7B', '7C'
+    ]
+
+    # Always start with default values
+    progress_data = {f"status-{label}": "not-started" for label in default_labels}
+    progress_data["name"] = user_name
+    progress_data["email"] = user_email
+
+    # Check for existing user
+    existing_user = await users_collection.find_one({"email": user_email})
+
+    if existing_user:
+        # Fill in any saved progress
+        saved_progress = {k: v for k, v in existing_user.items() if k.startswith("status-")}
+        progress_data.update(saved_progress)
+    else:
+        # Insert user with default progress
+        await users_collection.insert_one(progress_data)
+
+    # Step 4: Encode and redirect
+    progress_data.pop("_id", None)
+
+    encoded_progress = urllib.parse.quote(json.dumps(progress_data))
+
     redirect_url = (
         f"{FRONTEND_LINK}/#/Homework?"
-        f"name={user_name}&"
-        f"email={user_email}"
+        f"name={urllib.parse.quote(user_name)}&"
+        f"email={urllib.parse.quote(user_email)}&"
+        f"progress={encoded_progress}"
     )
 
     return RedirectResponse(redirect_url, status_code=303)
-    
+
+
 @app.post("/submit-progress")
 async def submit_progress(request: Request):
     data = await request.json()
     print("Received progress data:", data)
 
-    # You can now insert this into MongoDB, e.g.:
-    await users_collection.insert_one(data)
+    email = data.get("email")
+    if not email:
+        return JSONResponse(status_code=400, content={"message": "Missing email"})
 
-    return JSONResponse(content={"message": "Progress received!"})
+    await users_collection.update_one(
+        {"email": email},         # Match on email
+        {"$set": data},           # Overwrite everything with new data
+        upsert=True               # Insert if no document exists
+    )
+
+    return JSONResponse(content={"message": "Progress saved!"})
 
