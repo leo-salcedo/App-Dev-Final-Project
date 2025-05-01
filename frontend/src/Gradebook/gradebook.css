@@ -1,5 +1,7 @@
-. body {
+. html, body {
     background-color: #2A52BE;
+    height: 100%;
+    margin: 0;
 }
 
 .gradebook {
