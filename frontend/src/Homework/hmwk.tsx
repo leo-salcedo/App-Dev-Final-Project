@@ -3,6 +3,8 @@ import Sidebar from '../Sidebar/Sidebar.tsx';
 import {useLocation, useNavigate} from 'react-router-dom';
 import './hmwk.css';
 
+const backendUrl = import.meta.env.VITE_BACKEND;
+
 type TreeNode = {
   label: string;
   color: string;
@@ -72,6 +74,58 @@ const formLinks: Record<string, string> = {
 
 function Tree(){
   const navigate = useNavigate();
+
+  const updateStatus = async (label: string, newStatus: string) => {
+    const email = localStorage.getItem('email');
+    if (!email) {
+      console.error('No email found in localStorage');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${backendUrl}/api/homework/status`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          homeworkId: label,
+          status: newStatus
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update status');
+      }
+
+      // Update local storage after successful backend update
+      localStorage.setItem(`status-${label}`, newStatus);
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
+
+  const handleStatusChange = (label: string, currentStatus: string) => {
+    if (label === "Bootcamp Homework") return;
+    
+    let newStatus: string;
+    switch (currentStatus) {
+      case 'not-started':
+        newStatus = 'in-progress';
+        break;
+      case 'in-progress':
+        newStatus = 'completed';
+        break;
+      case 'completed':
+        newStatus = 'not-started';
+        break;
+      default:
+        newStatus = 'not-started';
+    }
+
+    updateStatus(label, newStatus);
+  };
 
   const click = (label: string) => {
   if (label === "Bootcamp Homework"){
@@ -152,8 +206,15 @@ function Tree(){
     }
 
     return (
-      <div className = "tree-node">
-        <div className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} onClick={() => click(node.label)}>
+      <div className="tree-node">
+        <div 
+          className={node.label === "Bootcamp Homework" ? "rectangle" : `triangle ${colorClass}`} 
+          onClick={() => click(node.label)}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            handleStatusChange(node.label, savedStatus);
+          }}
+        >
           <div className={node.label === "Bootcamp Homework" ? "rectangle-text" : "triangle-text"}>
             {node.label}
           </div>
@@ -161,32 +222,32 @@ function Tree(){
 
         {formLinks[node.label] && (
           <button
-          className = "form-button"
-          onClick = {(e) => {
-            e.stopPropagation();
-            window.open(formLinks[node.label], "_blank");
-          }}
-        >
-          Submit Form
-        </button>
+            className="form-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(formLinks[node.label], "_blank");
+            }}
+          >
+            Submit Form
+          </button>
         )}
 
         {node.children && (
-          <div className = "tree-children">
+          <div className="tree-children">
             {node.children.map((child, i) => (
-              <div key = {i} className="tree.branch">
-                <div className = {
+              <div key={i} className="tree.branch">
+                <div className={
                   node.children.length === 2 ? 
                   i === 0 ? 'line-left' : 'line-right' 
                   : 'line-straight'
                 }></div>
-              {makeTree(child)}
+                {makeTree(child)}
               </div>
             ))}
           </div>
         )}
       </div>
-   );
+    );
   };
   
 
