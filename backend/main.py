@@ -18,7 +18,7 @@ REDIRECT_URI = os.getenv("REDIRECT_URI")
 FRONTEND_LINK = os.getenv("PERSONAL_LINK_FRONT")
 
 
-MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"  # Replace with your Atlas connection string
+MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"  
 client = AsyncIOMotorClient(MONGO_URL)
 db = client["websiteInfo"]           
 users_collection = db["emails"]
@@ -47,7 +47,6 @@ def signin():
 async def auth_callback(request: Request):
     code = request.query_params.get("code")
 
-    # Step 1: Exchange code for access_token
     token_url = "https://oauth2.googleapis.com/token"
 
     async with httpx.AsyncClient() as client:
@@ -62,7 +61,6 @@ async def auth_callback(request: Request):
         token_response_data = token_response.json()
         access_token = token_response_data["access_token"]
 
-        # Step 2: Fetch user info
         userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
         userinfo_response = await client.get(
             userinfo_url,
@@ -73,9 +71,7 @@ async def auth_callback(request: Request):
 
     user_name = google_user_info["name"]
     user_email = google_user_info["email"]
-    
 
-    # Step 3: Fetch or create user progress
     default_labels = [
         '1A', '1B', '1C',
         '2A', '2B',
@@ -85,7 +81,6 @@ async def auth_callback(request: Request):
         '7A', '7B', '7C'
     ]
 
-    # Always start with default values
     progress_data = {f"status-{label}": "not-started" for label in default_labels}
     progress_data["name"] = user_name
     progress_data["email"] = user_email
@@ -101,14 +96,11 @@ async def auth_callback(request: Request):
     existing_user = await users_collection.find_one({"email": user_email})
 
     if existing_user:
-        # Fill in any saved progress
         saved_progress = {k: v for k, v in existing_user.items() if k.startswith("status-")}
         progress_data.update(saved_progress)
     else:
-        # Insert user with default progress
         await users_collection.insert_one(progress_data)
 
-    # Step 4: Encode and redirect
     progress_data.pop("_id", None)
 
     encoded_progress = urllib.parse.quote(json.dumps(progress_data))
@@ -133,9 +125,9 @@ async def submit_progress(request: Request):
         return JSONResponse(status_code=400, content={"message": "Missing email"})
 
     await users_collection.update_one(
-        {"email": email},         # Match on email
-        {"$set": data},           # Overwrite everything with new data
-        upsert=True               # Insert if no document exists
+        {"email": email},         
+        {"$set": data},          
+        upsert=True            
     )
 
     return JSONResponse(content={"message": "Progress saved!"})

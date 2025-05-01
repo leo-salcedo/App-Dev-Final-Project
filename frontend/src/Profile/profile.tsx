@@ -101,7 +101,7 @@ const Profile = () => {
         <div className="account-page">
           <Sidebar />
       
-          <div className="profile-wrapper"> {/* New wrapper to center the card */}
+          <div className="profile-wrapper"> 
             <div className="merged-container">
               <div className="header-container">Profile</div>
       

@@ -52,7 +52,7 @@ function Tree() {
   const email = queryParams.get("email");
   const progressRaw = queryParams.get("progress");
 
-  const [progressVersion, setProgressVersion] = useState(0); // triggers re-render
+  const [progressVersion, setProgressVersion] = useState(0); 
 
   useEffect(() => {
     if (name && email) {
@@ -66,7 +66,7 @@ function Tree() {
         for (const [key, value] of Object.entries(progressObj)) {
           localStorage.setItem(key, value as string);
         }
-        setProgressVersion(prev => prev + 1); // force re-render
+        setProgressVersion(prev => prev + 1); 
       } catch (err) {
         console.error("Failed to parse progress:", err);
       }
