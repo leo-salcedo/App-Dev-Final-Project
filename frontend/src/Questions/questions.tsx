@@ -40,10 +40,14 @@ function Questions() {
                Style your site using CSS to look polished.`,
       
         "3A": `Memory Flash Card game using the directions in the commented code.<br />
-               This will be tricky, but uses all elements learned in class.`,
+               This will be tricky, but uses all elements learned in class.<br />
+               Refer to this repository for baseplate code: 
+               <a href="https://github.com/KiberVG/MemoryMatchingBootcampHW" target="_blank" rel="noopener noreferrer">Memory FlashCard Game</a>`,
       
         "3B": `This homework is easier—create a flash card game like Quizlet.<br />
-               There’s one card at a time, and you can scroll through cards.`,
+               There’s one card at a time, and you can scroll through cards.<br />
+               Refer to this repository for baseplate code:
+               <a href="https://github.com/KiberVG/bootcamp2024-flashcardhw" target="_blank" rel="noopener noreferrer">Flashcard Game</a>`,
       
         "4A": `Read the React documentation: 
                <a href="https://react.dev/learn/your-first-component" target="_blank" rel="noopener noreferrer">Your First Component</a>`,
