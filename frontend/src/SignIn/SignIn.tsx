@@ -18,11 +18,11 @@ const SignIn = () => {
           Login with Google
         </button>
 
-        <ul className="nav-links">
+        {/* <ul className="nav-links">
           <li><Link to="/Homework">Homework</Link></li>
           <li><Link to="/Gradebook">Gradebook</Link></li>
           <li><Link to="/Profile">Profile</Link></li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
