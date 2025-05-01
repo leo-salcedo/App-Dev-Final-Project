@@ -23,7 +23,6 @@ client = AsyncIOMotorClient(MONGO_URL)
 db = client["websiteInfo"]           
 users_collection = db["emails"]
 
-print("🔵 FRONTEND_LINK =", FRONTEND_LINK)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[FRONTEND_LINK] if FRONTEND_LINK else [],
@@ -31,7 +30,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-print("🟢 CORS setup complete with origins:", app.user_middleware)
 
 @app.get("/login")
 def signin():
