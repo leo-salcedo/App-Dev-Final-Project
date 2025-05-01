@@ -73,6 +73,7 @@ async def auth_callback(request: Request):
 
     user_name = google_user_info["name"]
     user_email = google_user_info["email"]
+    
 
     # Step 3: Fetch or create user progress
     default_labels = [
@@ -88,6 +89,13 @@ async def auth_callback(request: Request):
     progress_data = {f"status-{label}": "not-started" for label in default_labels}
     progress_data["name"] = user_name
     progress_data["email"] = user_email
+
+    existing_user = await users_collection.find_one({"email": user_email})
+    
+    if existing_user:
+        for field in ["year", "proficient", "pronoun"]:
+            if field in existing_user:
+                progress_data[field] = existing_user[field]
 
     # Check for existing user
     existing_user = await users_collection.find_one({"email": user_email})
