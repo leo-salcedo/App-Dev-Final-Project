@@ -8,7 +8,6 @@ const Sidebar = () => {
  return (
    <div className="sidebar">
 
-<Link to = "/SignIn">
       <img
           src="/App_Dev-logo.png" 
           alt="App Dev Bootcamp" 
@@ -17,7 +16,6 @@ const Sidebar = () => {
           height="50" 
         />
         <link rel="stylesheet" href="" />
-        </Link>
 
      {/* <Link to="/post" className="plus-btn">
             <i className="fa-solid fa-plus"></i>
