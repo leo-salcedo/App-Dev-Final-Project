@@ -104,8 +104,7 @@ html, body {
   .button-container {
     display: flex;
     justify-content: center;
-    padding: 20px;
-    background-color: 
+    padding: 10px;
   }
   
   .logOutButton {
@@ -137,6 +136,29 @@ html, body {
 
   .form-group {
     margin-bottom: 10px;
+
+  }
+
+  .submitButton {
+    color: white;
+    background-color: #274960;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+   .submitButton:hover {
+    background-color: rgb(5, 57, 94);
+    transform: translateY(-1.5px);
+  }
+  
+  .submitButton:active {
+    transform: translateY(0);
   }
   
   

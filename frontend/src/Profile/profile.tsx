@@ -129,7 +129,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className = "form-group">
-                    <label htmlFor="pronoun">Set Pronoun:</label>
+                    <label htmlFor="pronoun">Set Pronouns:</label>
                     <Select
                     id="pronoun"
                     options={pronouns}
@@ -146,9 +146,11 @@ const Profile = () => {
               <div className="section2">
                 <form>
                   <div className="form-group">
+                    <div className = "button-container">
                   <button type="button" onClick={handleSubmitProfile} className="submitButton">
                     Submit Profile
                   </button>
+                  </div>
                     <div className="button-container">
                       <button type="button" onClick={handleLogout} className="logOutButton">
                         Log Out
