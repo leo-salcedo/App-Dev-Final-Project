@@ -82,7 +82,7 @@ function Questions() {
                 <h1>Homework Assignment #{id}</h1>
 
                 <div className="homework-directions">
-                    <h2>Homework Directions</h2>
+                    <h2>Homework Directions:</h2>
                     <div
                         className="homework-directions-content"
                         dangerouslySetInnerHTML={{ __html: directionsMap[id ?? ""] || "Directions not found for this assignment." }}
