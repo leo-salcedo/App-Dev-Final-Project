@@ -1,5 +1,8 @@
 html, body {
-background: #2D5D7B;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #2D5D7B;
 }
 
 .page-container {
@@ -49,13 +52,14 @@ background: #2D5D7B;
   height: 90px;
   border: 2px solid #ffffff30;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  background-color: #1c1c1c;
+  background-color: #274960;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   position: relative;
   border-radius: 15px;
+  margin-bottom: 20px;
 }
 
 .rectangle-text {
@@ -78,20 +82,27 @@ background: #2D5D7B;
 }
 
 .triangle.completed {
-  border-bottom: 70px solid darkblue;
+  border-bottom: 70px solid #4CAF50;
 }
 
 .triangle.in-progress {
-  border-bottom: 70px solid lightblue;
+  border-bottom: 70px solid #fcc00dde;
 }
 
 .triangle.not-started {
-  border-bottom: 70px solid gray;
+  border-bottom: 70px solid #B0BEC5;
 }
 
-.triangle:hover {
-  transform: scale(1.05);
-  border-bottom-color: black;
+.triangle.completed:hover {
+  border-bottom-color: #2f7232; 
+}
+
+.triangle.in-progress:hover {
+  border-bottom-color: #ab8600; 
+}
+
+.triangle.not-started:hover {
+  border-bottom-color: #65727a; 
 }
 
 .triangle-text {
@@ -126,17 +137,17 @@ background: #2D5D7B;
 }
 
 .progress-completed{
-  background-color: darkblue;
+  background-color: #4CAF50;
   height: 100%;
 }
 
 .progress-in-progress{
-  background-color: lightblue;
+  background-color: #fcc00dde;
   height: 100%;
 }
 
 .progress-not-started{
-  background-color: gray;
+  background-color: #B0BEC5;
   height: 100%;
 }
 
@@ -157,9 +168,10 @@ background: #2D5D7B;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  background-color: #274960;
   transition: background-color 0.3s ease;
 }
 
 .form-button:hover {
-  background-color: black;
+  background-color: #0e2636;
 }
