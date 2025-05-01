@@ -21,13 +21,15 @@ client = AsyncIOMotorClient(MONGO_URL)
 db = client["websiteInfo"]           
 users_collection = db["emails"]
 
+print("🔵 FRONTEND_LINK =", FRONTEND_LINK)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[FRONTEND_LINK] if FRONTEND_LINK else [],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+print("🟢 CORS setup complete with origins:", app.user_middleware)
 
 @app.get("/login")
 def signin():
@@ -89,5 +91,13 @@ async def auth_callback(request: Request):
 
     return RedirectResponse(redirect_url, status_code=303)
     
+@app.post("/submit-progress")
+async def submit_progress(request: Request):
+    data = await request.json()
+    print("Received progress data:", data)
 
+    # You can now insert this into MongoDB, e.g.:
+    await users_collection.insert_one(data)
+
+    return JSONResponse(content={"message": "Progress received!"})
 
