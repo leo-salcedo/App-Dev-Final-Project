@@ -23,6 +23,7 @@ body, html {
   h1 {
     font-size: 36px;
     margin-bottom: 10px;
+    text-align: center;
   }
   
   .subtitle {
@@ -52,26 +53,5 @@ body, html {
     list-style: none;
     padding: 0;
     display: flex;
-    gap: 24px;
-  }
-  
-  .nav-links li a {
-    color: #BBDEFB;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links li a:hover {
-    color: white;
-  }
-
-  .signin-box {
-    background-color: #274960; 
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    max-width: 500px;
-    width: 90%;
-  }
-  
+    justify-content: center;
+}

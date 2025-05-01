@@ -25,6 +25,7 @@ html, body {
   overflow: auto;
   flex-grow: 1;
   gap: 20px;
+  border-color: 5;
 }
 
 .tree-node {

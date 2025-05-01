@@ -1,5 +1,11 @@
-. body {
+<<<<<<< HEAD
+. html, body {
+=======
+.body {
+>>>>>>> 8c69b35d7f9638f38a09a3b0b07682ee528707f7
     background-color: #2A52BE;
+    height: 100%;
+    margin: 0;
 }
 
 .gradebook {
@@ -10,7 +16,6 @@
     
     width: 100vw;
     min-height: 100vh;
-
     margin-left: 40px;
 }
 
@@ -25,9 +30,12 @@
     padding: 10px;
     margin-top: 10px;
     border-radius: 20px;
+
 }
 
 h2 {
+    padding-top: 20px;
+    padding-bottom: 10px;
     padding-left: 2%;
     font-size: 2rem;
     margin: 0;
@@ -47,6 +55,7 @@ h2 {
 
     width: 80%;
     margin-top: 20px;
+    background-color: #274960;
 }
 
 .assignment {

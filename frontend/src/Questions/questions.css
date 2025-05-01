@@ -1,3 +1,10 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;  
+}
+
 .homework-container{
     padding: 40px;
     display: flex;
@@ -14,13 +21,15 @@ h1{
     font-size: 36px;
     margin-bottom: 10px;
     text-shadow: 1px 1px 2px gray;
-    text-align: center;
+    text-align: left;
 }
 
 h2{
     font-size: 24px;
+    margin-top: 40px;
     margin-bottom: 10px;
-    text-align: center;
+    text-align: left;
+    padding-left: 25px;
 }
 
 .homework-direction {
@@ -29,8 +38,9 @@ h2{
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    margin-bottom: 30px;
-    text-align: center;
+    padding-top: 60px;
+    margin-bottom: 60px;
+    text-align: left;
 }
 
 .homework-directions p {
@@ -41,12 +51,14 @@ h2{
     font-size: 16px;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    text-align: left;
     
 }
 
 .homework-directions-content{
-    text-align: center;
+    padding-left: 25px;
+    padding-bottom: 30px;
+    text-align: left;
 }
 
 .homework-directions-content a {
