@@ -224,15 +224,14 @@ function Tree(){
             }
 
             try {
-              console.log("Backend URL:", backendUrl);
-              const response = await fetch(`${backendUrl}/submit-progress`, {
+              const response = await fetch('/submit-progress', {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
               });
-
+            
               if (response.ok) {
                 alert("Progress submitted successfully!");
               } else {
@@ -241,8 +240,7 @@ function Tree(){
             } catch (error) {
               console.error("Error submitting progress:", error);
               alert("Error submitting progress.");
-            }
-          }}
+            }}}
         >
           Submit
         </button>
