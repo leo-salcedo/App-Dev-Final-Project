@@ -1,9 +1,9 @@
 html, body {
-background: #2A52BE;
+background: #2D5D7B;
 }
 
 .page-container {
-  background-color: #2A52BE;
+  background-color: #2D5D7B;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +75,6 @@ background: #2A52BE;
   position: relative;
   cursor: pointer;
   transition: transform 0.2s ease, border-bottom-color 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .triangle.completed {
