@@ -10,16 +10,16 @@ const Profile = () => {
     
     const [year, setYear] = useState(() => {
         const stored = localStorage.getItem('year');
-        return stored ? JSON.parse(stored) : [];
+        return stored ? JSON.parse(stored) : null;
     });
     const [proficient, setProficient] = useState(() => {
         const stored = localStorage.getItem('proficient');
-        return stored ? JSON.parse(stored) : [];
+        return stored ? JSON.parse(stored) : null;
     });
 
     const [pronoun, setPronoun] = useState(() => {
-        const stored = localStorage.getItem('pronouns');
-        return stored ? JSON.parse(stored) : [];
+        const stored = localStorage.getItem('pronoun');
+        return stored ? JSON.parse(stored) : null;
     });
 
     const handleLogout = ()=> {
@@ -86,7 +86,7 @@ const Profile = () => {
                       styles={customSelectStyles}
                     />
                   </div>
-      
+
                   <div className="form-group">
                     <label htmlFor="proficient">Coding Proficiency:</label>
                     <Select
@@ -95,6 +95,16 @@ const Profile = () => {
                       value={proficient}
                       onChange={setProficient}
                       styles={customSelectStyles}
+                    />
+                  </div>
+                  <div className = "form-group">
+                    <label htmlFor="pronoun">Set Pronoun:</label>
+                    <Select
+                    id="pronoun"
+                    options={pronouns}
+                    value={pronoun}
+                    onChange={setPronoun}
+                    styles={customSelectStyles}
                     />
                   </div>
                 </form>
