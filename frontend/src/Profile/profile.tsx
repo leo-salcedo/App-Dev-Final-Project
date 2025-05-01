@@ -98,7 +98,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className = "form-group">
-                    <label htmlFor="pronoun">Set Pronoun:</label>
+                    <label htmlFor="pronoun">Set Pronouns:</label>
                     <Select
                     id="pronoun"
                     options={pronouns}
