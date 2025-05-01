@@ -29,6 +29,8 @@ function Questions() {
         "1C": `*Optional* watch this video: <a href="https://www.youtube.com/watch?v=DVRQoVRzMIY&ab_channel=TechWithTim" target="_blank" rel="noopener noreferrer">YouTube – Tech With Tim</a>`,
       
         "2A": `Complete levels 1–13 and 18–20 of Flexbox Froggy.<br />
+               You can find Flexbox Froggy linked here: 
+               <a href="https://flexboxfroggy.com/" target="_blank" rel="noopener noreferrer">Flexbox Froggy</a><br />
                Create a new branch titled 'flexbox' in your repository and create a new folder.<br />
                Then upload your screenshots for this week to the new folder in the flexbox branch.`,
       
