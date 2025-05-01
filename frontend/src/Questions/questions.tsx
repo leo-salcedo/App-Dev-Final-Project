@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 import './questions.css'
 
 function Questions() {
@@ -8,6 +8,13 @@ function Questions() {
 
     const [directions, setDirections] = useState('');
     const [status, setStatus] = useState('not-started');
+
+    useEffect(() => {
+        const savedStatus = localStorage.getItem(`status-${id}`);
+        if (savedStatus) {
+            setStatus(savedStatus);
+        }
+    }, [id]);
     
     const directionsMap: Record<string, string> = {
         "1A": `Create a local repository, and then connect it to Github.<br />
