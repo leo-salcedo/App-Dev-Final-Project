@@ -9,7 +9,7 @@ const Sidebar = () => {
    <div className="sidebar">
 
       <img
-          src="/App_Dev-logo.png" 
+          src="./App_Dev-logo.png" 
           alt="App Dev Bootcamp" 
           className="sidebar-logo" 
           width="50" 
