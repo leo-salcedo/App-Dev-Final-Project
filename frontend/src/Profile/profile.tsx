@@ -56,40 +56,56 @@ const Profile = () => {
 
     return (
         <div className="account-page">
-            <Sidebar />
+          <Sidebar />
+      
+          <div className="profile-wrapper"> {/* New wrapper to center the card */}
             <div className="merged-container">
-                <div></div>
-                <div className="header-container">Profile</div>
-                <div className="section1">
-                    <form>
-                        <div className="form-group">
-                            <label id="labelName" htmlFor="year">Year in College:</label>
-                            <Select id="year" options={years} value={year} onChange={setYear} styles={customSelectStyles} />
-
-                            //**use isMulti to the right of id for multiple selection enabled! - Maggie
-
-                        </div>
-                        <div className="form-group">
-                            <label id="labelName" htmlFor="proficient">Coding Proficiency:</label>
-                            <Select id="proficient" options={proficients} value={proficient} onChange={setProficient} styles={customSelectStyles} />
-                        </div>
-                    </form>
-                </div>
-
-                <div className="dotted-line"></div>
-
-                <div className="section2">
-                    <form>
-                        <div className="form-group">
-                            <div className = "button-container">
-                            <button type="button" onClick={handleLogout} className="logOutButton">Log Out</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+              <div className="header-container">Profile</div>
+      
+              <div className="section1">
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="year">Year in College:</label>
+                    <Select
+                      id="year"
+                      options={years}
+                      value={year}
+                      onChange={setYear}
+                      styles={customSelectStyles}
+                    />
+                  </div>
+      
+                  <div className="form-group">
+                    <label htmlFor="proficient">Coding Proficiency:</label>
+                    <Select
+                      id="proficient"
+                      options={proficients}
+                      value={proficient}
+                      onChange={setProficient}
+                      styles={customSelectStyles}
+                    />
+                  </div>
+                </form>
+              </div>
+      
+              <div className="dotted-line"></div>
+      
+              <div className="section2">
+                <form>
+                  <div className="form-group">
+                    <div className="button-container">
+                      <button type="button" onClick={handleLogout} className="logOutButton">
+                        Log Out
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
     );
+      
 };
 
 export default Profile;
