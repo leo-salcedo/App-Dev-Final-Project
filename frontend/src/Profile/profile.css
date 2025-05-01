@@ -134,5 +134,9 @@ html, body {
     border-top: 2px dotted #ccc;
     margin: 20px 0;
   }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
   
   
