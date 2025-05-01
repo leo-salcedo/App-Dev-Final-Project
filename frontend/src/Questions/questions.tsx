@@ -42,7 +42,7 @@ function Questions() {
         "3A": `Memory Flash Card game using the directions in the commented code.<br />
                This will be tricky, but uses all elements learned in class.<br />
                Refer to this repository for baseplate code: 
-               <a href="https://github.com/KiberVG/MemoryMatchingBootcampHW" target="_blank" rel="noopener noreferrer">Memory FlashCard Game</a>`,
+               <a href="https://github.com/KiberVG/MemoryMatchingBootcampHW" target="_blank" rel="noopener noreferrer">Memory Flashcard Game</a>`,
       
         "3B": `This homework is easier—create a flash card game like Quizlet.<br />
                There’s one card at a time, and you can scroll through cards.<br />
