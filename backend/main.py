@@ -1,10 +1,12 @@
 from dotenv import load_dotenv
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, HTTPException
+from pydantic import BaseModel
 import os
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import httpx
+import datetime
 
 app = FastAPI()
 
@@ -15,11 +17,11 @@ GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 REDIRECT_URI = os.getenv("REDIRECT_URI")
 FRONTEND_LINK = os.getenv("PERSONAL_LINK_FRONT")
 
-
 MONGO_URL = "mongodb+srv://asamaga:TESTING1234@appdev.dihekdl.mongodb.net/?retryWrites=true&w=majority&appName=AppDev"  # Replace with your Atlas connection string
 client = AsyncIOMotorClient(MONGO_URL)
 db = client["websiteInfo"]           
 users_collection = db["emails"]
+homework_status_collection = db["homework_status"]  # New collection for homework status
 
 app.add_middleware(
     CORSMiddleware,
@@ -89,5 +91,37 @@ async def auth_callback(request: Request):
 
     return RedirectResponse(redirect_url, status_code=303)
     
+
+class HomeworkStatus(BaseModel):
+    email: str
+    homeworkId: str
+    status: str
+
+@app.post("/api/homework/status")
+async def update_homework_status(status: HomeworkStatus):
+    try:
+        # Check if user exists
+        user = await users_collection.find_one({"email": status.email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        # Update or create homework status
+        await homework_status_collection.update_one(
+            {
+                "email": status.email,
+                "homeworkId": status.homeworkId
+            },
+            {
+                "$set": {
+                    "status": status.status,
+                    "lastUpdated": datetime.datetime.utcnow()
+                }
+            },
+            upsert=True
+        )
+
+        return {"message": "Status updated successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
