@@ -5,6 +5,8 @@ import Sidebar from '../Sidebar/Sidebar.tsx';
 import './profile.css'
 import './profile';
 
+
+
 const Profile = () => {
     const navigate = useNavigate();
     
@@ -66,6 +68,35 @@ const Profile = () => {
     useEffect(() => localStorage.setItem('proficient', JSON.stringify(proficient)), [proficient]);
     useEffect(() => localStorage.setItem('pronoun', JSON.stringify(pronoun)), [pronoun]);
 
+    const handleSubmitProfile = async () => {
+      const data: Record<string, string> = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key) {
+          data[key] = localStorage.getItem(key) || "";
+        }
+      }
+    
+      try {
+        const response = await fetch('/submit-progress', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+    
+        if (response.ok) {
+          alert("Profile submitted successfully!");
+        } else {
+          alert("Failed to submit profile.");
+        }
+      } catch (error) {
+        console.error("Error submitting profile:", error);
+        alert("Error submitting profile.");
+      }
+    };
+
     return (
         <div className="account-page">
           <Sidebar />
@@ -115,6 +146,11 @@ const Profile = () => {
               <div className="section2">
                 <form>
                   <div className="form-group">
+                    <div className = "button-container">
+                  <button type="button" onClick={handleSubmitProfile} className="submitButton">
+                    Submit Profile
+                  </button>
+                  </div>
                     <div className="button-container">
                       <button type="button" onClick={handleLogout} className="logOutButton">
                         Log Out
