@@ -3,6 +3,8 @@ import Sidebar from '../Sidebar/Sidebar.tsx';
 import {useLocation, useNavigate} from 'react-router-dom';
 import './hmwk.css';
 
+const backendUrl = import.meta.env.VITE_BACKEND;
+
 type TreeNode = {
   label: string;
   color: string;
@@ -191,23 +193,57 @@ function Tree(){
   
 
   return (
-    <div className = "page-container"> 
+    <div className="page-container"> 
       <Sidebar />
-      <div className = "tree-container">
-        <div className = "progress-section">
+      <div className="tree-container">
+        <div className="progress-section">
           <div className="progress-bar">
-            <div className = "progress-completed" style = {{width: `${completedPercent}%` }}/>
-            <div className = "progress-in-progress" style = {{width: `${inProgressPercent}%` }}/>
-            <div className = "progress-not-started" style = {{width: `${notStartedPercent}%` }}/>
+            <div className="progress-completed" style={{ width: `${completedPercent}%` }} />
+            <div className="progress-in-progress" style={{ width: `${inProgressPercent}%` }} />
+            <div className="progress-not-started" style={{ width: `${notStartedPercent}%` }} />
           </div>
-
-          <div className = "progress-labels">
+  
+          <div className="progress-labels">
             <span>Completed: {completed}</span>
             <span>In Progress: {inProgress}</span>
             <span>Not Started: {notStarted}</span>
           </div>
         </div>
+  
         {makeTree(treeData)}
+  
+        <button 
+          className="submit-button"
+          onClick={async () => {
+            const data: Record<string, string> = {};
+            for (let i = 0; i < localStorage.length; i++) {
+              const key = localStorage.key(i);
+              if (key) {
+                data[key] = localStorage.getItem(key) || "";
+              }
+            }
+
+            try {
+              const response = await fetch('/submit-progress', {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              });
+            
+              if (response.ok) {
+                alert("Progress submitted successfully!");
+              } else {
+                alert("Failed to submit progress.");
+              }
+            } catch (error) {
+              console.error("Error submitting progress:", error);
+              alert("Error submitting progress.");
+            }}}
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

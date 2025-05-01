@@ -1,15 +1,79 @@
-.links {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-}
-
-.title { 
-    display: flex;
-    justify-content: center;
-}
-
-.loginid {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2D5D7B;
     display: flex;
     justify-content: center;
-}
+    align-items: center;
+  }
+  
+  .signin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .login-button {
+    background-color: #4fc3f7;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #29b6f6;
+  }
+  
+  .nav-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 24px;
+  }
+  
+  .nav-links li a {
+    color: #BBDEFB;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links li a:hover {
+    color: white;
+  }
+
+  .signin-box {
+    background-color: #274960;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    width: fit-content;
+    max-width: 90%;
+    text-align: center;
+  }
+  
