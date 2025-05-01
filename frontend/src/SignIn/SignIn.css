@@ -53,27 +53,5 @@ body, html {
     list-style: none;
     padding: 0;
     display: flex;
-    gap: 24px;
-  }
-  
-  .nav-links li a {
-    color: #BBDEFB;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links li a:hover {
-    color: white;
-  }
-
-  .signin-box {
-    background-color: #274960;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    width: fit-content;
-    max-width: 90%;
-    text-align: center;
-  }
-  
+    justify-content: center;
+}

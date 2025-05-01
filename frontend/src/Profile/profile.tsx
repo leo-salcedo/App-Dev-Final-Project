@@ -17,6 +17,11 @@ const Profile = () => {
         return stored ? JSON.parse(stored) : [];
     });
 
+    const [pronoun, setPronoun] = useState(() => {
+        const stored = localStorage.getItem('pronouns');
+        return stored ? JSON.parse(stored) : [];
+    });
+
     const handleLogout = ()=> {
         localStorage.clear();
         navigate('/SignIn');
@@ -51,8 +56,15 @@ const Profile = () => {
         { value: 'Goated', label: 'Goated' }
     ];
 
+    const pronouns = [
+      { value: "He/Him", label: "He/Him"},
+      { value: "She/Her", label: "She/Her"},
+      { value: "They/Them", label: "They/Them"},
+    ];
+
     useEffect(() => localStorage.setItem('year', JSON.stringify(year)), [year]);
     useEffect(() => localStorage.setItem('proficient', JSON.stringify(proficient)), [proficient]);
+    useEffect(() => localStorage.setItem('pronoun', JSON.stringify(pronoun)), [pronoun]);
 
     return (
         <div className="account-page">

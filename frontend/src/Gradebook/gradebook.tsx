@@ -39,7 +39,7 @@ const Gradebook = () => {
 
       <div className="header">
         <h2>Gradebook</h2>
-        <p className="total-grade">Current Grade: {totalGrade}%</p>
+        <h2 className="total-grade">Current Grade: {totalGrade}%</h2>
       </div>
 
       <div className="assignments">
