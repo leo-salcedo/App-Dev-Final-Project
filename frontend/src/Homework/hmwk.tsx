@@ -242,7 +242,7 @@ function Tree(){
               alert("Error submitting progress.");
             }}}
         >
-          Submit
+          Save Progress
         </button>
       </div>
     </div>
